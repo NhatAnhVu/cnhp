@@ -57,10 +57,10 @@ export function Router() {
           <Route path="dang-nhap" element={<ContentFullWidth />}>
             <Route path="" element={<Login />} />
           </Route>
-          <Route element={<Protected />}>
+          <Route element={<Protected />}></Route>
+          <Route path="" element={<ContentFullWidth />}>
             <Route path="" element={<Home />} />
           </Route>
-          <Route path="" element={<ContentFullWidth />}></Route>
           <Route path="gioi-thieu" element={<ContentFullWidth />}>
             <Route
               path="ve-cap-nuoc-hai-phong/thu-ngo"

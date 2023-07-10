@@ -48,6 +48,7 @@ import Quality from "../pages/Quality/Quality";
 import Contact from "../pages/Contact/Contact";
 import Search from "../pages/Search/Search";
 import { useSelector } from "react-redux";
+import ProductDetail from "../pages/Services&Products/ProductDetail";
 
 export function Router() {
   return (
@@ -90,6 +91,7 @@ export function Router() {
           </Route>
           <Route path="san-pham-va-dich-vu" element={<ContentLayout />}>
             <Route path="san-pham" element={<Products />} />
+            <Route path="san-pham/:id" element={<ProductDetail />} />
             <Route path="dich-vu" element={<Services />} />
             <Route path="dich-vu/lap-dat-moi" element={<Installation />} />
             <Route

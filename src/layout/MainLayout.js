@@ -300,8 +300,9 @@ function MainLayout() {
         <Divider style={{ marginTop: "19px", marginBottom: 0 }} />
         <Content>
           {location.pathname === "/" ||
-          location.pathname === "/dang-nhap" ||
-          location.pathname.includes("/gioi-thieu/") ? (
+          location.pathname === "/dang-nhap" 
+          || location.pathname.includes("/gioi-thieu/ve-cap-nuoc-hai-phong/cac-linh-vuc-kinh-doanh") 
+          ? (
             <ContentFullWidth />
           ) : (
             <ContentLayout />

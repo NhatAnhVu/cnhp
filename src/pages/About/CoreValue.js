@@ -12,14 +12,14 @@ const CoreValue = () => {
             <Title>Tầm nhìn</Title>
             <Divider />
             <Row>
-                <Col span={6} order={1}>
+                <Col span={10} order={1}>
                     <div>Tiếp tục là một trong những đơn vị cấp nước hàng đầu toàn quốc, tương đương với tầm khu vực.</div>
-                    <img src={img1} style={{margin: '32px 0 0 26px', textAlign: 'center'}}>
+                    <img src={img1} style={{margin: '32px 0 0 0', textAlign: 'center'}}>
                     </img>
                 </Col>
-                <Col span={18} order={2}>
+                <Col span={14} order={2}>
                     <div style={{position: 'relative'}}>
-                        <img src={img2} ></img>
+                        <img src={img2} style={{width: '100%', height: '318px'}}></img>
                         <div style={{position: 'absolute', top: '140px', left: '40px'}}>
                             <h1 style={{fontSize: '32px', fontWeight: '600', color: '#fff', maxWidth: '540px'}}>“Trở thành doanh nghiệp phân phối nước thuộc nhóm dẫn đầu cả nước”</h1>
                             <div style={{fontWeight: '600px', fontSize: '13px', color: "#fff", marginTop: '20px'}}>

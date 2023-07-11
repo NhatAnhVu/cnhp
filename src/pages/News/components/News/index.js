@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import PostCategory from '../PostCategory';
 import NewItem from '../NewItem';
 
-const News = ({ title, listNews }) => {
+const News = ({ title, listNews, listTags, listPostCategory }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 2;
 
@@ -38,7 +38,7 @@ const News = ({ title, listNews }) => {
 
                     </Col>
                     <Col span={8}>
-                        <PostCategory />
+                        <PostCategory listTags={listTags} listPostCategory={listPostCategory}/>
                     </Col>
                 </Row>
             </WrapperContent>

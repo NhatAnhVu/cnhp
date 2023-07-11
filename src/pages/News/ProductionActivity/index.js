@@ -32,9 +32,18 @@ const listNews = [
         image: anh1
     }
 ]
+
+
+
+
 const ProductionActivity = () => {
-    return(
-        <News title={'Hoạt động sản xuất kinh doanh'} listNews={listNews}/>
+    return (
+        <News
+            title={'Hoạt động sản xuất kinh doanh'}
+            listNews={listNews}
+        
+            
+        />
     )
 
 };

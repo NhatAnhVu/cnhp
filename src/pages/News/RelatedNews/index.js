@@ -2,6 +2,7 @@ import React from 'react'
 import News from '../components/News'
 
 import anh1 from './../../../common/images/Rectangle-31.jpg'
+
 const listNews = [
     {
         id: 1,
@@ -25,9 +26,17 @@ const listNews = [
         image: anh1
     }
 ]
+
+
+
 const RelatedNews = () => {
     return (
-        <News title={'Tin tức liên quan'} listNews={listNews}/>
+        <News
+            title={'Tin tức liên quan'}
+            listNews={listNews}
+            
+            
+        />
     )
 }
 

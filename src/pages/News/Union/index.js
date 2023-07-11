@@ -38,9 +38,16 @@ const listNews = [
         image: anh1
     },
 ]
+
+
 const Union = () => {
     return (
-        <News title={'Đảng và đoàn thể'} listNews={listNews} />
+        <News
+            title={'Đảng và đoàn thể'}
+            listNews={listNews}
+            
+            
+        />
     )
 }
 

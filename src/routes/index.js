@@ -44,7 +44,7 @@ import AnnualMeeting from "../pages/Shareholder/AnnualMeeting";
 import ProductionActivity from "../pages/News/ProductionActivity";
 import Union from "../pages/News/Union";
 import RelatedNews from "../pages/News/RelatedNews";
-import Quality from "../pages/Quality/Quality";
+import Quality from "../pages/Quality";
 import Contact from "../pages/Contact/Contact";
 import Search from "../pages/Search/Search";
 import { useSelector } from "react-redux";

@@ -9,7 +9,7 @@ import NewItem from '../NewItem';
 
 const News = ({ title, listNews, listTags, listPostCategory }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const pageSize = 2;
+    const pageSize = 3;
 
     const displayListNews = listNews.slice((currentPage - 1) * pageSize, currentPage * pageSize);
     const onShowSizeChange = (current, pageSize) => {

@@ -49,6 +49,7 @@ import Contact from "../pages/Contact/Contact";
 import Search from "../pages/Search/Search";
 import { useSelector } from "react-redux";
 import ProductDetail from "../pages/Services&Products/ProductDetail";
+import DetailNews from "../pages/News/components/DetailNews";
 
 export function Router() {
   return (
@@ -154,6 +155,10 @@ export function Router() {
             />
           </Route>{" "}
           <Route path="tin-tuc" element={<ContentLayout />}>
+          <Route
+              path="chi-tiet/:title"
+              element={<DetailNews />}
+            />
             <Route
               path="hoat-dong-san-xuat-kinh-doanh"
               element={<ProductionActivity />}

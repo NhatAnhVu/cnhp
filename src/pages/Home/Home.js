@@ -12,9 +12,9 @@ const Home = () => {
     <CarouselContent />
     <Divider className="mt-[0px]" />
     <Service />
-    <Image preview={false} src={bg2} />
+    <img preview={false} src={bg2} style={{width: '100%'}}/>
     <Grid />
-    <Image preview={false} src={bg3} />
+    <img preview={false} src={bg3} style={{width: '100%'}}/>
     <Number />
   </>;
 };

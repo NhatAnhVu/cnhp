@@ -23,4 +23,5 @@ export const Wapper = styled.div`
         width: 244px;
         height: 218px;
     }
+
 `

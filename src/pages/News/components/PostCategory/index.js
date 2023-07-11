@@ -21,6 +21,13 @@ const listTagQuality = [
     'Chính sách chung',
     'Chính sách bảo mật'
 ]
+const listTagShareholder= [
+    'Báo cáo tài chính',
+    'Báo cáo thường niên',
+    'Báo cáo quản trị',
+    'Thông tin cổ đông',
+    'Đại hội cổ đông thường niên'
+]
 
 const listPostQuality = [
     {
@@ -47,6 +54,20 @@ const listPostNews = [
         datetime: '10/10/2022 08:08:08'
     },
 ]
+const listPostShareholder = [
+    {
+        title: 'Báo cáo tài chính riêng giữa niên độ năm 2022',
+        datetime: '10/10/2022 08:08:08'
+    },
+    {
+        title: 'Báo cáo thường niên năm 2021',
+        datetime: '10/10/2022 08:08:08'
+    },
+    {
+        title: 'Báo cáo tình hình quản trị Công ty (6 tháng đầu năm 2022)',
+        datetime: '10/10/2022 08:08:08'
+    },
+]
 const PostCategory = () => {
     const [listTag, setListTag] = useState([])
     const [listPostCategory, setListPostCategory] = useState([])
@@ -61,9 +82,12 @@ const PostCategory = () => {
         else if (location.pathname.includes('chat-luong-nuoc')) {
             setListTag(listTagQuality)
             setListPostCategory(listPostQuality)
+        }else if(location.pathname.includes('co-dong')){
+            setListTag(listTagShareholder)
+            setListPostCategory(listPostShareholder)
         }
     })
-    
+
     return (
         <Wrapper>
             <Header>

@@ -10,6 +10,7 @@ import { Col, Row } from 'antd';
 // import Service from '../Home/Service';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { WapperSigin, FormSigin, ImgFB } from './style';
+import Services from '../Services&Products/Services'
 
 function Login() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -32,11 +33,10 @@ const onFinishFailed = (errorInfo) => {
 
     <WapperSigin>
     <div>
-        <img src={img1}/>
+        <img src={img1} style={{width: '100%'}}/>
         <Row>
             <Col span={16}>
-                {/* <Service /> */}
-                Service
+                <Services/>
             </Col>
             <Col span={8}>
                 <FormSigin>
@@ -119,7 +119,7 @@ const onFinishFailed = (errorInfo) => {
             </Col>
         </Row>
 
-        <img src={img3} style={{marginTop: '100px'}}></img>
+        <img src={img3} style={{marginTop: '100px', width: '100%'}}></img>
     </div>
 </WapperSigin>
   );

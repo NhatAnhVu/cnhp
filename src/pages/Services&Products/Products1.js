@@ -19,6 +19,7 @@ const Products = () => {
         IsOutOfStock: 0,
       });
       setProductList(res.Object.listProductResponse);
+      console.log(productList);
     };
     getListProduct();
   }, [typeOfSort]);

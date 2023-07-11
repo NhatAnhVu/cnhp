@@ -17,7 +17,7 @@ import Moral from "../pages/About/Moral";
 import Culture from "../pages/About/Culture";
 import Structure from "../pages/About/Structure";
 import ContentLayout from "../layout/ContentLayout";
-import Products from "../pages/Services&Products/Products";
+import Product from "../pages/Services&Products/Product";
 import Services from "../pages/Services&Products/Services";
 import Installation from "../pages/Services&Products/Installation";
 import WaterUsageSearch from "../pages/Services&Products/WaterUsageSearch";
@@ -48,8 +48,9 @@ import Quality from "../pages/Quality/Quality";
 import Contact from "../pages/Contact/Contact";
 import Search from "../pages/Search/Search";
 import { useSelector } from "react-redux";
-import ProductDetail from "../pages/Services&Products/ProductDetail";
+
 import DetailNews from "../pages/News/components/DetailNews";
+import ProductDettail from "../pages/Services&Products/Product/ProductDetail";
 
 export function Router() {
   return (
@@ -91,8 +92,8 @@ export function Router() {
             <Route path="so-do-to-chuc" element={<Structure />} />
           </Route>
           <Route path="san-pham-va-dich-vu" element={<ContentLayout />}>
-            <Route path="san-pham" element={<Products />} />
-            <Route path="san-pham/:id" element={<ProductDetail />} />
+            <Route path="san-pham" element={<Product />} />
+            <Route path="san-pham/:id" element={<ProductDettail />} />
             <Route path="dich-vu" element={<Services />} />
             <Route path="dich-vu/lap-dat-moi" element={<Installation />} />
             <Route

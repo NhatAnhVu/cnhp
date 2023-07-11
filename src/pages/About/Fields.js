@@ -13,7 +13,7 @@ const style = {
 
 const Fields = () => {
   return <WrapperBusiness>
-    <img src={img1}>
+    <img src={img1} style={{width: '100%'}}>
     </img>
 
     <TitleBusiness>

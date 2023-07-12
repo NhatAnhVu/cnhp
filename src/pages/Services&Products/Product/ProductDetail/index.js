@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Line, ProductPrice, ProductQuantity, ProductRate, Wrapper, WrapperButton, WrapperDescription, WrapperInfo } from './styles'
 import { Button, Carousel, Col, Rate, Row } from 'antd'
 import { TitleStyled } from '../../../News/components/GlobalStyles';
@@ -7,19 +7,33 @@ import { faCartShopping, faMinus, faPlus, faStar } from '@fortawesome/free-solid
 import { WrapperRate } from './styles';
 import RateComponent from '../components/RateComponent';
 import ProductBestSaler from '../components/ProductBestSaler';
+import { GetBestSellProduct } from '../../../../services/apis/bestSaleProduct';
 
 const listImage = [
     require('../../../../common/images/sanpham-1.png'),
     require('../../../../common/images/sanpham-1.png'),
     require('../../../../common/images/sanpham-1.png'),
     require('../../../../common/images/sanpham-1.png'),
-    
+
 
 
 ]
 
 const ProductDettail = () => {
     let carouselRef = null;
+    const [listBest, setListBest] = useState([]);
+
+    useEffect(() => {
+        const getBest = async () => {
+            const response = await GetBestSellProduct({
+                "PageSize": 10,
+                "CurrentPage": 1,
+                "CategoryPostID": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            });
+            console.log(response);
+        }
+        getBest()
+    },[])
 
     const handleButtonClick = (slideNumber) => {
         carouselRef.goTo(slideNumber);

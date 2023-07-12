@@ -51,6 +51,7 @@ import { useSelector } from "react-redux";
 
 import DetailNews from "../pages/News/components/DetailNews";
 import ProductDettail from "../pages/Services&Products/Product/ProductDetail";
+import Genaral from "../pages/Administrator/Genaral/Genaral";
 
 export function Router() {
   return (
@@ -177,6 +178,9 @@ export function Router() {
             <Route path="" element={<Search />} />
           </Route>
           <Route path="*" element={<div>Trang khong ton tai</div>} />
+          <Route path="tong-quan" element={<ContentFullWidth/>}>
+              <Route path="" element={<Genaral />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

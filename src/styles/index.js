@@ -30,3 +30,11 @@ export const customTitle = css`
         margin: 15px 0 -3px 0;
     }
 `;
+
+// icon chấm tròn màu cam
+export const Dots = styled.div`
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #F88C00;
+`

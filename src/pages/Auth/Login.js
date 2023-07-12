@@ -23,7 +23,7 @@ const onFinish = (values) => {
 };
 
 if(isAuthenticated === true) {
-  navigate("/")
+  navigate("/tong-quan")
 }
 
 const onFinishFailed = (errorInfo) => {

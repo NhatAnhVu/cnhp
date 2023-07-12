@@ -20,10 +20,11 @@ function Login() {
 
 const onFinish = (values) => {
   dispatch(login(values));
-  if(isAuthenticated == true) {
-    navigate("/")
-  }
 };
+
+if(isAuthenticated === true) {
+  navigate("/")
+}
 
 const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo);

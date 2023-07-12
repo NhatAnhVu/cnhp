@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import News from "../News/components/News";
+import { getAllListPosts } from "../../services/apis/listPostNews";
 
 const listNews = [
     {
@@ -28,12 +29,29 @@ const listNews = [
 
 
 const Quality = () => {
-    return <News
+
+    const [dataNews, setDataNews] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1)
+
+    useEffect(() => {
+        const getListNewQuality = async () => {
+            const res = await getAllListPosts({
+                PageSize: 20,
+                CurrentPage: currentPage,
+                CategoryPostID: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            });
+            setDataNews(res.Object.data);
+            console.log(res.Object);
+        }
+        getListNewQuality()
+    })
+
+    return( <News
         title={'Kiểm tra chất lượng nước'}
         listNews={listNews}
         
         
-    />;
+    />);
 };
 
 export default Quality;

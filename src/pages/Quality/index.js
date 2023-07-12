@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import News from "../News/components/News";
+import { GetBestSellProduct } from "../../services/apis/bestSaleProduct";
 
 const listNews = [
     {
@@ -28,12 +29,39 @@ const listNews = [
 
 
 const Quality = () => {
-    return <News
-        title={'Kiểm tra chất lượng nước'}
-        listNews={listNews}
-        
-        
-    />;
+    useEffect(() => {
+        const getBest = async () => {
+            const res = await GetBestSellProduct({
+                "PageSize": 20,
+                "CurrentPage": 1,
+                "CategoryPostID": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            });
+            console.log(res);
+        }
+        getBest()
+    })
+
+    // useEffect(() => {
+    //     const getBest = async () => {
+    //         const response = await GetBestSellProduct({
+    //             "PageSize": 10,
+    //             "CurrentPage": 1,
+    //             "CategoryPostID": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    //         });
+    //         console.log(response);
+    //     }
+    //     getBest()
+    // }, [])
+
+    return (
+        <News
+            title={'Kiểm tra chất lượng nước'}
+            listNews={listNews}
+
+
+        />
+    )
+
 };
 
 export default Quality;

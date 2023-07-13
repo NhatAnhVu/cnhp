@@ -1,33 +1,37 @@
 import { Form, DatePicker, Row, Col, Input, Button } from 'antd';
+import ButtonPrimary from '../../../components/Button/ButtonPrimary';
+import { SearchSerialStyled } from '../styles';
 
 function SearchSerial() {
     const [form] = Form.useForm();
 
     return (
-        <Form layout="vertical" form={form}>
-            <Row>
-                <Col>
-                    <Form.Item label="Field A" required tooltip="This is a required field">
-                        <Input placeholder="input placeholder" />
-                    </Form.Item>
-                </Col>
-                <Col>
-                    <Form.Item label="DatePicker">
-                        <DatePicker />
-                    </Form.Item>
-                </Col>
-                <Col>
-                    <Form.Item label="DatePicker">
-                        <DatePicker />
-                    </Form.Item>
-                </Col>
-                <Col>
-                    <Form.Item>
-                        <Button>Submit</Button>
-                    </Form.Item>
-                </Col>
-            </Row>
-        </Form>
+        <SearchSerialStyled>
+            <Form layout="vertical" form={form}>
+                <Row gutter={10} className="container">
+                    <Col span={6}>
+                        <Form.Item label="Mã khách hàng">
+                            <Input placeholder="input placeholder" />
+                        </Form.Item>
+                    </Col>
+                    <Col span={6}>
+                        <Form.Item label="Từ ngày">
+                            <DatePicker />
+                        </Form.Item>
+                    </Col>
+                    <Col span={6}>
+                        <Form.Item label="Đến ngày">
+                            <DatePicker />
+                        </Form.Item>
+                    </Col>
+                    <Col span={6}>
+                        <Form.Item>
+                            <ButtonPrimary>Tra cứu</ButtonPrimary>
+                        </Form.Item>
+                    </Col>
+                </Row>
+            </Form>
+        </SearchSerialStyled>
     );
 }
 

@@ -1,31 +1,25 @@
-import { Tabs } from 'antd';
+import CustomTabs from '../../components/Tabs';
 import React from 'react';
 import SearchSerial from './components/SearchSerial';
+import { SuspendScheduleStyled } from './styles';
 
 const SuspendSchedule = () => {
     const items = [
         {
             key: '1',
-            label: `Tab 1`,
-            children: `Content of Tab Pane 1`
+            label: `Tìm kiếm theo mã khách hàng`,
+            children: <SearchSerial />
         },
         {
             key: '2',
-            label: `Tab 2`,
-            children: `Content of Tab Pane 2`
-        },
-        {
-            key: '3',
-            label: `Tab 3`,
-            children: `Content of Tab Pane 3`
+            label: `Tìm kiếm theo khu vực`,
+            children: <SearchSerial />
         }
     ];
     return (
-        <div>
-            <div className="title">Lịch tạm ngừng cấp nước</div>
-            <Tabs />
-            <SearchSerial />
-        </div>
+        <SuspendScheduleStyled>
+            <CustomTabs items={items} title={'Lịch tạm ngừng cấp nước'} />
+        </SuspendScheduleStyled>
     );
 };
 

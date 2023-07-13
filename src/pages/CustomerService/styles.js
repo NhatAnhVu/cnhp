@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components';
 import { colors, customTitle } from '../../styles';
 
+//---------------------CUSTOM ------------------------//
+
 //---------------------STYLE COMPONENT ------------------------//
 
 export const PolicyGeneralStyled = styled.div`
@@ -114,3 +116,28 @@ export const WaterPriceStyled = styled.div`
         margin-bottom: 60px;
     }
 `;
+
+export const SearchSerialStyled = styled.div`
+    input {
+        height: 42px;
+    }
+    .ant-picker {
+        width: 100%;
+        height: 42px;
+    }
+    button {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 42px;
+    }
+
+    .container {
+        align-items: end;
+    }
+`;
+
+export const SuspendScheduleStyled = styled.div``;
+
+export const InvoiceToolStyled = styled.div``;

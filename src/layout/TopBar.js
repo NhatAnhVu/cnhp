@@ -19,57 +19,9 @@ const TopBar = () => {
     return (
         <LayoutStyled>
             <Row
-            className="custom-width"
                 gutter={[24]}
                 justify="space-between"
                 align="middle"
-                className="online-support"
-              >
-                <LinkOutlined style={{ color: "black" }} />
-                <span>&nbsp;Liên kết website</span>
-              </Row>
-            </Col>
-            <Col>
-              <Row
-                justify="space-between"
-                align="middle"
-                className="online-support"
-              >
-                <DownloadOutlined style={{ color: "black" }} />
-                <span>&nbsp;Tải ứng dụng</span>
-              </Row>
-            </Col>
-            {user.isAuthenticated && (
-              <Col>
-                <Row className="online-support administrator">
-                  <span onClick={() => navigate("tong-quan")}>Xin chào {user?.user?.Username}</span>
-                </Row>
-              </Col>
-            )}
-            {user.isAuthenticated ? (
-              <Col>
-                <Button
-                  className="button-red"
-                  onClick={() => dispatch(logout())}
-                >
-                  Đăng xuất
-                </Button>
-              </Col>
-            ) : (
-              <Col>
-                <Button
-                  className="button-red"
-                  onClick={() => navigate("/dang-nhap")}
-                >
-                  Đăng nhập
-                </Button>
-              </Col>
-            )}
-          </Row>
-        </Col>
-      </Row>
-    </LayoutStyled>
-  );
                 style={{
                     paddingLeft: 0,
                     paddingRight: 0,
@@ -77,6 +29,7 @@ const TopBar = () => {
                     height: "42px",
                     margin: "auto",
                 }}
+                className="custom-width"
             >
                 <Col style={{ display: "flex", alignItems: "center" }}>
                     <PhoneFilled />

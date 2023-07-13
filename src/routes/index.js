@@ -50,16 +50,28 @@ import Genaral from '../pages/Administrator/Genaral/Genaral';
 // route Admin
 import LayoutAdmin from '../layout/Admin/LayoutAdmin';
 // import TongQuann from "../pages/Admin/TongQuann";
-import { Fragment } from 'react';
-import HoaDonNuoc from '../pages/Administrator/ManageNotes/HoaDonNuoc';
-import DonHang from '../pages/Administrator/ManageNotes/DonHang';
-import TongQuan from '../pages/Administrator/Genaral/Genaral';
+
+import { Fragment } from "react";
+import HoaDonNuoc from "../pages/Administrator/ManageNotes/HoaDonNuoc";
+import DonHang from "../pages/Administrator/ManageNotes/DonHang";
+import TongQuan from "../pages/Administrator/Genaral/Genaral";
+import DanhMucThe from '../pages/Administrator/ManagePosts/CategoryCard'
 import SanPham from '../pages/Administrator/Products/Products';
 
 export const routeAdmin = [
     { path: '/tong-quan', component: TongQuan, layout: true },
     { path: '/hoa-don-nuoc', component: HoaDonNuoc, layout: true },
     { path: '/don-hang', component: DonHang, layout: true },
+
+
+
+
+
+
+
+
+
+    { path: '/danh-muc-the', component: DanhMucThe, layout: true},
     { path: '/kho-hang', component: SanPham, layout: true }
 ];
 // export const publicRoutes = [

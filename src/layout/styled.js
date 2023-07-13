@@ -103,4 +103,8 @@ export const LayoutStyled = styled.div`
     background: #ffffff;
     box-shadow: 2px 0px 3px rgb(0 0 0 / 5%);
   }
+
+  .administrator {
+    cursor: pointer;
+  }
 `;

@@ -57,3 +57,15 @@ html *::-webkit-scrollbar-track {
 /* 
 #idTable {
 }  */
+
+.ant-modal-body {
+  thead {
+          tr {
+              th {
+                  background-color: #154398;
+                  color: #fff;
+                  text-align: center;
+              }
+          }          
+      }
+  }

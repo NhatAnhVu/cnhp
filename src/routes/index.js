@@ -61,11 +61,21 @@ import { Fragment } from "react";
 import HoaDonNuoc from "../pages/Administrator/ManageNotes/HoaDonNuoc";
 import DonHang from "../pages/Administrator/ManageNotes/DonHang";
 import TongQuan from "../pages/Administrator/Genaral/Genaral";
+import DanhMucThe from '../pages/Administrator/ManagePosts/CategoryCard'
 
 export const routeAdmin = [
     { path: '/tong-quan', component: TongQuan, layout: true },
     { path: '/hoa-don-nuoc', component: HoaDonNuoc, layout: true },
     { path: '/don-hang', component: DonHang, layout: true },
+
+
+
+
+
+
+
+
+    { path: '/danh-muc-the', component: DanhMucThe, layout: true},
 
 ]
 // export const publicRoutes = [

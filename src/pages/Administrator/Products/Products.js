@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CustomTabs from '../../../components/Tabs';
 import { Image, Table } from 'antd';
 import productImg from '../../../common/images/imageAdministrator_page/product.png';
@@ -6,8 +6,13 @@ import { EyeOutlined } from '@ant-design/icons';
 import CustomButton from '../../../components/Button/ButtonPrimary';
 import { colors } from '../../../styles';
 import CustomModal from './components/Modal';
+import { ProductsStyled } from './styles';
+import CustomTable from '../../../components/Table';
+import { getAllProductInCard } from '../../../services/apis/cart';
 const Products = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [dataProduct, setDataProduct] = useState([]);
+
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -33,7 +38,7 @@ const Products = () => {
         },
         {
             title: 'Tên sản phẩm',
-            dataIndex: 'name',
+            dataIndex: 'ProductName',
             render: (text) => (
                 <a style={{ display: 'flex' }}>
                     <img src={productImg} />
@@ -48,17 +53,17 @@ const Products = () => {
         },
         {
             title: 'Giá',
-            dataIndex: 'price',
+            dataIndex: 'Price',
             sorter: (a, b) => a.price - b.price
         },
         {
             title: 'Giảm Giá(%)',
-            dataIndex: 'discout',
+            dataIndex: 'SalePrice',
             sorter: (a, b) => a.discout - b.discout
         },
         {
             title: 'Kho hàng',
-            dataIndex: 'warehouse',
+            dataIndex: 'Quantity',
             sorter: (a, b) => a.warehouse - b.warehouse
         },
         {
@@ -67,55 +72,64 @@ const Products = () => {
             sorter: (a, b) => a.revenue - b.revenue
         }
     ];
-    const data = [
-        {
-            key: 1,
-            name: `Sản phẩm nước uống tinh khiết HaiPhong Water - Thùng 24 chai 500ml`,
-            price: 250000,
-            discout: 50,
-            warehouse: 500,
-            revenue: 10
-        },
-        {
-            key: 2,
-            name: `Sản phẩm nước uống tinh khiết HaiPhong Water - Thùng 24 chai 500ml`,
-            price: 300000,
-            discout: 50,
-            warehouse: 500,
-            revenue: 10
-        },
-        {
-            key: 3,
-            name: `Sản phẩm nước uống tinh khiết HaiPhong Water - Thùng 24 chai 500ml`,
-            price: 150000,
-            discout: 50,
-            warehouse: 500,
-            revenue: 10
-        }
-    ];
+    const data = dataProduct?.Object;
+
+    //     {
+    //         key: 1,
+    //         name: `Sản phẩm nước uống tinh khiết HaiPhong Water - Thùng 24 chai 500ml`,
+    //         price: 250000,
+    //         discout: 50,
+    //         warehouse: 500,
+    //         revenue: 10
+    //     },
+    //     {
+    //         key: 2,
+    //         name: `Sản phẩm nước uống tinh khiết HaiPhong Water - Thùng 24 chai 500ml`,
+    //         price: 300000,
+    //         discout: 50,
+    //         warehouse: 500,
+    //         revenue: 10
+    //     },
+    //     {
+    //         key: 3,
+    //         name: `Sản phẩm nước uống tinh khiết HaiPhong Water - Thùng 24 chai 500ml`,
+    //         price: 150000,
+    //         discout: 50,
+    //         warehouse: 500,
+    //         revenue: 10
+    //     }
+    // ];
     const items = [
         {
             key: '1',
             label: `Tất cả`,
-            children: <Table columns={columns} dataSource={data} rowSelection={rowSelection} />
+            children: <CustomTable columns={columns} dataSource={data} rowSelection={rowSelection} />
         },
         {
             key: '2',
             label: `Hết hàng`,
-            children: ''
+            children: <CustomTable columns={columns} dataSource={data} rowSelection={rowSelection} />
         }
     ];
     const hasSelected = selectedRowKeys.length > 0;
     const operations = (
-        <div>
+        <div className="group-btn">
             <CustomButton onClick={showModal}>Thêm sản phẩm</CustomButton>
             <CustomButton backgroundColor="transparent" color={colors.black}>
-                Thêm sản phẩm
+                Xóa
             </CustomButton>
         </div>
     );
+
+    useEffect(() => {
+        const getList = async () => {
+            const res = await getAllProductInCard();
+            setDataProduct(res);
+        };
+        getList();
+    }, []);
     return (
-        <div>
+        <ProductsStyled>
             <CustomTabs items={items} title={'Danh sách'} operations={operations} />
             <div
                 style={{
@@ -131,7 +145,7 @@ const Products = () => {
                 </span>
             </div>
             <CustomModal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} />
-        </div>
+        </ProductsStyled>
     );
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card } from 'antd';
 import { Button, Dropdown, Modal } from 'antd';
 import {  CalendarOutlined } from '@ant-design/icons';
@@ -16,6 +16,8 @@ import { Input, Space } from 'antd';
 import TableComponent from './Taable';
 import Modals from './Modals';
 import ModalListCustorm from './ModalListCustorm';
+
+import { getOverview } from '../../../services/apis/overview';
 const { Search } = Input;
 const suffix = (
   <AudioOutlined
@@ -160,6 +162,17 @@ const Genaral = () => {
   const [modalColumns, setModalColumns] = useState([]);
   const [modalDataSource, setModalDataSource] = useState([]);
   const [modalTitle, setModalTitle] = useState('');
+
+  useEffect(() => {
+    const getOverviewAll = async () => {
+      const res = await getOverview({
+        FromDate: "2023-07-13T17:54:21.626Z",
+        ToDate: "2023-07-13T17:54:21.626Z"
+      });
+      console.log('res>>>:', res );
+    };
+    getOverviewAll();
+  }, []);
   
   const showModal1 = (title) => {
     setModalTitle(title)

@@ -6,6 +6,7 @@ const initialState = {
   user: null,
   loading: false,
   error: null,
+  // token: null
 };
 
 const authSlice = createSlice({
@@ -23,6 +24,7 @@ const authSlice = createSlice({
         state.user = action.payload.Object.Token;
         state.loading = false;
         state.error = null;
+        // state.token = action.payload
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
@@ -41,11 +43,13 @@ const authSlice = createSlice({
   },
 });
 
+// gui request dang nhap
 export const login = createAsyncThunk(
   "auth/login",
   async ({ Username, Password }, { rejectWithValue }) => {
     try {
       const response = await Login({ Username, Password });
+      // console.log("response>>", response.Object.Token.Token);
       return response;
     } catch (error) {
       return rejectWithValue(error);

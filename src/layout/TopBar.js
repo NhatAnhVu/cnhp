@@ -19,7 +19,6 @@ const TopBar = () => {
     return (
         <LayoutStyled>
             <Row
-            className="custom-width"
                 gutter={[24]}
                 justify="space-between"
                 align="middle"
@@ -30,6 +29,7 @@ const TopBar = () => {
                     height: "42px",
                     margin: "auto",
                 }}
+                className="custom-width"
             >
                 <Col style={{ display: "flex", alignItems: "center" }}>
                     <PhoneFilled />

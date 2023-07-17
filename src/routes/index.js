@@ -64,6 +64,7 @@ import Department from '../pages/Administrator/ManageSystem/Department';
 import UserDirectory from '../pages/Administrator/ManageSystem/UserDirectory';
 import DanhMucBaiViet from '../pages/Administrator/ManagePosts/ManagePosts';
 import DangBai from '../pages/Administrator/ManagePosts/Posts/Posts';
+import ListUser from '../pages/Administrator/ManageSystem/ListUser';
 
 export const routeAdmin = [
     { path: '/tong-quan', component: TongQuan, layout: true },
@@ -76,6 +77,7 @@ export const routeAdmin = [
     // Quản trị hệ thống
     { path: '/phong-ban-chuc-vu', component: Department, layout: true },
     { path: '/danh-ba-nguoi-dung', component: UserDirectory, layout: true },
+    { path: '/phan-quyen', component: ListUser, layout: true },
 
     { path: '/to-quan-ly', component: ToQuanLy, layout: true },
     { path: '/danh-muc-the', component: DanhMucThe, layout: true },

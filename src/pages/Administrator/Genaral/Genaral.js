@@ -16,8 +16,10 @@ import { Input, Space } from 'antd';
 import TableComponent from './Taable';
 import Modals from './Modals';
 import ModalListCustorm from './ModalListCustorm';
+import { useSelector, useDispatch  } from 'react-redux';
 
 import { getOverview } from '../../../services/apis/overview';
+import { fetchDetailsOverView, fetchOverView } from '../../../reducers/overViewSlice';
 const { Search } = Input;
 const suffix = (
   <AudioOutlined
@@ -163,17 +165,28 @@ const Genaral = () => {
   const [modalDataSource, setModalDataSource] = useState([]);
   const [modalTitle, setModalTitle] = useState('');
 
+  const [dataOverView, setdataOverView] = useState("")
+
+  const dispatch = useDispatch();
+
+
+  const overView = useSelector((state)=> state?.overView?.overViewGet?.Object);
+
+  //gui resquest body api
   useEffect(() => {
-    const getOverviewAll = async () => {
-      const res = await getOverview({
-        FromDate: "2023-07-13T17:54:21.626Z",
-        ToDate: "2023-07-13T17:54:21.626Z"
-      });
-      console.log('res>>>:', res );
-    };
-    getOverviewAll();
+    dispatch(fetchOverView({ 
+        FromDate: "2023-07-14T03:15:41.279Z", 
+        ToDate: "2023-07-14T03:15:41.279Z" 
+    }));
   }, []);
-  
+
+  useEffect(() => {
+    setdataOverView(overView);
+  }, [overView])
+
+  console.log('dataOverView', dataOverView);
+
+
   const showModal1 = (title) => {
     setModalTitle(title)
     setModalVisible1(true);

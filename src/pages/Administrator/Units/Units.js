@@ -1,8 +1,13 @@
 import React from 'react'
+import TableCommon from '../../../components/Admin/TableCommon'
 
 const Units = () => {
   return (
-    <div>Units</div>
+    <>
+      <TableCommon 
+          title={"Danh sách tổ quản lý"}
+      />
+    </>
   )
 }
 

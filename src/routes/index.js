@@ -52,8 +52,8 @@ import LayoutAdmin from '../layout/Admin/LayoutAdmin';
 // import TongQuann from "../pages/Admin/TongQuann";
 
 import { Fragment } from 'react';
-import HoaDonNuoc from '../pages/Admin/HoaDonNuoc';
-import DonHang from '../pages/Admin/DonHang';
+// import HoaDonNuoc from '../pages/Admin/HoaDonNuoc';
+// import DonHang from '../pages/Admin/DonHang';
 import WaterBill from '../pages/Administrator/WaterBill';
 import Order from '../pages/Administrator/Order';
 import HoaDonNuoc from '../pages/Administrator/ManageNotes/HoaDonNuoc';
@@ -62,6 +62,8 @@ import TongQuan from '../pages/Administrator/Genaral/Genaral';
 import DanhMucThe from '../pages/Administrator/ManagePosts/CategoryCard';
 import SanPham from '../pages/Administrator/Products/Products';
 import ToQuanLy from '../pages/Administrator/Units/Units';
+import Department from '../pages/Administrator/ManageSystem/Department';
+import UserDirectory from '../pages/Administrator/ManageSystem/UserDirectory';
 
 export const routeAdmin = [
     { path: '/tong-quan', component: TongQuan, layout: true },

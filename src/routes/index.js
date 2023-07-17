@@ -55,9 +55,11 @@ import { Fragment } from "react";
 import HoaDonNuoc from "../pages/Administrator/ManageNotes/HoaDonNuoc";
 import DonHang from "../pages/Administrator/ManageNotes/DonHang";
 import TongQuan from "../pages/Administrator/Genaral/Genaral";
-import DanhMucThe from '../pages/Administrator/ManagePosts/CategoryCard'
+import DanhMucThe from '../pages/Administrator/ManagePosts/CategoryCard';
 import SanPham from '../pages/Administrator/Products/Products';
-import ToQuanLy from '../pages/Administrator/Units/Units'
+import ToQuanLy from '../pages/Administrator/Units/Units';
+import DanhMucBaiViet from '../pages/Administrator/ManagePosts/ManagePosts';
+import DangBai from '../pages/Administrator/ManagePosts/Posts/Posts'
 
 export const routeAdmin = [
     { path: '/tong-quan', component: TongQuan, layout: true },
@@ -68,9 +70,9 @@ export const routeAdmin = [
 
 
 
+    { path: '/dang-bai', component: DangBai, layout: true},
 
-
-
+    { path: '/danh-sach-bai-viet', component: DanhMucBaiViet, layout: true},
     { path: '/to-quan-ly', component: ToQuanLy, layout: true},
     { path: '/danh-muc-the', component: DanhMucThe, layout: true},
     { path: '/kho-hang', component: SanPham, layout: true }

@@ -61,11 +61,12 @@ import { Fragment } from "react";
 import HoaDonNuoc from "../pages/Admin/HoaDonNuoc";
 import DonHang from "../pages/Admin/DonHang";
 import WaterBill from "../pages/Administrator/WaterBill";
+import Order from "../pages/Administrator/Order";
 
 export const routeAdmin = [
     { path: '/tong-quan', component: TongQuan, layout: true },
     { path: '/hoa-don-nuoc', component: WaterBill, layout: true },
-    { path: '/don-hang', component: DonHang, layout: true },
+    { path: '/don-hang', component: Order, layout: true },
 
 ]
 // export const publicRoutes = [

@@ -9,6 +9,9 @@ export const Title = styled(Typography)`
     padding-bottom: 20px;
     border-bottom:1px solid #DDD;
     margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     position: relative;
 `
 export const Line = styled.div`

@@ -1,0 +1,32 @@
+import CustomButton from '../../../../components/Button/ButtonPrimary';
+import { Row, Col, Input, Divider } from 'antd';
+import { colors } from '../../../../styles';
+import ListDirector from './components/ListDirector';
+import ListDepartment from '../Department/components/ListDepartment';
+
+function UserDirectory() {
+    return (
+        <>
+            <div className="head-group">
+                <div className="title">Phòng ban - Chức danh</div>
+                <div>
+                    <CustomButton backgroundColor={colors.white}>Xuất file</CustomButton>
+                    <CustomButton backgroundColor={colors.white}>Import file</CustomButton>
+                    <CustomButton backgroundColor={colors.primary}>Thêm chức danh</CustomButton>
+                </div>
+            </div>
+            <Divider />
+
+            <Row gutter={16}>
+                <Col span={5}>
+                    <ListDepartment />
+                </Col>
+                <Col span={19}>
+                    <ListDirector />
+                </Col>
+            </Row>
+        </>
+    );
+}
+
+export default UserDirectory;

@@ -51,6 +51,7 @@ import Genaral from '../pages/Administrator/Genaral/Genaral';
 import LayoutAdmin from '../layout/Admin/LayoutAdmin';
 // import TongQuann from "../pages/Admin/TongQuann";
 
+
 import { Fragment } from "react";
 import HoaDonNuoc from "../pages/Admin/HoaDonNuoc";
 import DonHang from "../pages/Admin/DonHang";
@@ -70,8 +71,15 @@ export const routeAdmin = [
     { path: '/hoa-don-nuoc', component: WaterBill, layout: true },
     { path: '/don-hang', component: Order, layout: true },
 
+    // SẢn phẩm
+    { path: '/kho-hang', component: SanPham, layout: true },
 
+    // Quản trị hệ thống
+    { path: '/phong-ban-chuc-vu', component: Department, layout: true },
+    { path: '/danh-ba-nguoi-dung', component: UserDirectory, layout: true },
 
+    { path: '/to-quan-ly', component: ToQuanLy, layout: true },
+    { path: '/danh-muc-the', component: DanhMucThe, layout: true },
 
 
     { path: '/dang-bai', component: DangBai, layout: true},
@@ -87,7 +95,6 @@ export const routeAdmin = [
 //   // { path: '/upload', component: Upload, layout: HeaderOnly },
 // ]
 export function Router() {
-
     return (
         <BrowserRouter>
             <Routes>

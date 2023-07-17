@@ -57,6 +57,7 @@ import DonHang from "../pages/Administrator/ManageNotes/DonHang";
 import TongQuan from "../pages/Administrator/Genaral/Genaral";
 import DanhMucThe from '../pages/Administrator/ManagePosts/CategoryCard'
 import SanPham from '../pages/Administrator/Products/Products';
+import ToQuanLy from '../pages/Administrator/Units/Units'
 
 export const routeAdmin = [
     { path: '/tong-quan', component: TongQuan, layout: true },
@@ -70,7 +71,7 @@ export const routeAdmin = [
 
 
 
-
+    { path: '/to-quan-ly', component: ToQuanLy, layout: true},
     { path: '/danh-muc-the', component: DanhMucThe, layout: true},
     { path: '/kho-hang', component: SanPham, layout: true }
 ];

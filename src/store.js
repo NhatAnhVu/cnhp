@@ -3,6 +3,9 @@ import authReducer from "./reducers/authReducer.js";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import logger from "redux-logger";
+
+import overViewReducer from './reducers/overViewSlice.js'
+
 const authPersistConfig = {
   key: "auth",
   storage,
@@ -10,6 +13,7 @@ const authPersistConfig = {
 
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
+  overView: overViewReducer //add OverviewSlice
 });
 
 const store = configureStore({

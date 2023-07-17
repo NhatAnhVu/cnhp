@@ -1,14 +1,15 @@
+// import { store } from '../store';
 import axios from "axios";
 
 const axiosInstance = axios.create({
   baseURL: "https://apicnhp.h2qsolution.com/api/",
-  timeout: 30000,
+  timeout: 3000,
 });
 
 axiosInstance.interceptors.request.use(
   function (config) {
     const state = () => require("../store").store.getState();
-    config.headers.Authorization = state().auth?.user?.Token;
+    config.headers.Authorization = state().auth?.user?.Token; //thêm header
     return config;
   },
   function (error) {

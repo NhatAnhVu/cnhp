@@ -74,7 +74,7 @@ const TopBar = () => {
                         {user.isAuthenticated && (
                             <Col>
                                 <Row className="online-support">
-                                    <span>Xin chào {user?.user?.Username}</span>
+                                    <span style={{cursor: 'pointer'}} onClick={() => navigate('/tong-quan')}>Xin chào {user?.user?.Username}</span>
                                 </Row>
                             </Col>
                         )}

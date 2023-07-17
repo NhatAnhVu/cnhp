@@ -40,3 +40,32 @@ html *::-webkit-scrollbar-track {
   border-radius: 0;
   background-color: rgba(0, 0, 0, 0);
 }
+/* 
+:global(.ant-modal-title) {
+
+} */
+
+.ant-modal-content {
+  .ant-modal-header {
+    .ant-modal-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #154398;
+    }
+  }
+}
+/* 
+#idTable {
+}  */
+
+.ant-modal-body {
+  thead {
+          tr {
+              th {
+                  background-color: #154398;
+                  color: #fff;
+                  text-align: center;
+              }
+          }          
+      }
+  }

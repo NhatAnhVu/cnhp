@@ -10,8 +10,12 @@ function CustomButton({ children, backgroundColor, color, onClick, className }) 
         font-size: 16px;
         font-weight: 600;
     `;
+    const props = {
+        onClick
+    };
+
     return (
-        <ButtonPrimaryStyled onClick={onClick} className={className}>
+        <ButtonPrimaryStyled {...props} className={className}>
             {children}
         </ButtonPrimaryStyled>
     );

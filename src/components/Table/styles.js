@@ -16,4 +16,29 @@ export const TableStyled = styled(Table)`
             }
         }
     }
+    .serial {
+        display: flex;
+        justify-content: center;
+    }
+    .action {
+        display: flex;
+        justify-content: space-between;
+    }
+    .icon {
+        border-radius: 100%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        svg 
+    }
+    .icon-edit{
+        background: ${colors.lightGreen};
+        color: ${colors.green};
+    }
+    .icon-delete{
+        background: ${colors.lightRed};
+        color: ${colors.secondary};
+    }
 `;

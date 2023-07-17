@@ -51,28 +51,28 @@ import Genaral from '../pages/Administrator/Genaral/Genaral';
 import LayoutAdmin from '../layout/Admin/LayoutAdmin';
 // import TongQuann from "../pages/Admin/TongQuann";
 
-import { Fragment } from "react";
-import HoaDonNuoc from "../pages/Administrator/ManageNotes/HoaDonNuoc";
-import DonHang from "../pages/Administrator/ManageNotes/DonHang";
-import TongQuan from "../pages/Administrator/Genaral/Genaral";
-import DanhMucThe from '../pages/Administrator/ManagePosts/CategoryCard'
+import { Fragment } from 'react';
+import HoaDonNuoc from '../pages/Administrator/ManageNotes/HoaDonNuoc';
+import DonHang from '../pages/Administrator/ManageNotes/DonHang';
+import TongQuan from '../pages/Administrator/Genaral/Genaral';
+import DanhMucThe from '../pages/Administrator/ManagePosts/CategoryCard';
 import SanPham from '../pages/Administrator/Products/Products';
+import Department from '../pages/Administrator/ManageSystem/Department';
+import UserDirectory from '../pages/Administrator/ManageSystem/UserDirectory';
 
 export const routeAdmin = [
     { path: '/tong-quan', component: TongQuan, layout: true },
     { path: '/hoa-don-nuoc', component: HoaDonNuoc, layout: true },
     { path: '/don-hang', component: DonHang, layout: true },
 
+    { path: '/danh-muc-the', component: DanhMucThe, layout: true },
 
+    // SẢn phẩm
+    { path: '/kho-hang', component: SanPham, layout: true },
 
-
-
-
-
-
-
-    { path: '/danh-muc-the', component: DanhMucThe, layout: true},
-    { path: '/kho-hang', component: SanPham, layout: true }
+    // Quản trị hệ thống
+    { path: '/phong-ban-chuc-vu', component: Department, layout: true },
+    { path: '/danh-ba-nguoi-dung', component: UserDirectory, layout: true }
 ];
 // export const publicRoutes = [
 //   { path: '/tong-quan', component: Home },

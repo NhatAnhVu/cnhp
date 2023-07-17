@@ -9,7 +9,9 @@ export const colors = {
     white: '#ffffff',
     blue: '#154398',
     yellow: '#F88C00',
-    grown: '#666'
+    grown: '#666',
+    lightGreen: '#DDFEF0',
+    lightRed: '#FFE9EC'
 };
 
 //--------------MIXINS-----------//
@@ -36,5 +38,5 @@ export const Dots = styled.div`
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: #F88C00;
-`
+    background-color: #f88c00;
+`;

@@ -51,17 +51,20 @@ import Genaral from '../pages/Administrator/Genaral/Genaral';
 import LayoutAdmin from '../layout/Admin/LayoutAdmin';
 // import TongQuann from "../pages/Admin/TongQuann";
 
-import { Fragment } from 'react';
-import HoaDonNuoc from '../pages/Admin/HoaDonNuoc';
-import DonHang from '../pages/Admin/DonHang';
-import WaterBill from '../pages/Administrator/WaterBill';
-import Order from '../pages/Administrator/Order';
-import HoaDonNuoc from '../pages/Administrator/ManageNotes/HoaDonNuoc';
-import DonHang from '../pages/Administrator/ManageNotes/DonHang';
-import TongQuan from '../pages/Administrator/Genaral/Genaral';
+
+import { Fragment } from "react";
+import HoaDonNuoc from "../pages/Admin/HoaDonNuoc";
+import DonHang from "../pages/Admin/DonHang";
+import WaterBill from "../pages/Administrator/WaterBill";
+import Order from "../pages/Administrator/Order";
+import HoaDonNuoc from "../pages/Administrator/ManageNotes/HoaDonNuoc";
+import DonHang from "../pages/Administrator/ManageNotes/DonHang";
+import TongQuan from "../pages/Administrator/Genaral/Genaral";
 import DanhMucThe from '../pages/Administrator/ManagePosts/CategoryCard';
 import SanPham from '../pages/Administrator/Products/Products';
 import ToQuanLy from '../pages/Administrator/Units/Units';
+import DanhMucBaiViet from '../pages/Administrator/ManagePosts/ManagePosts';
+import DangBai from '../pages/Administrator/ManagePosts/Posts/Posts'
 
 export const routeAdmin = [
     { path: '/tong-quan', component: TongQuan, layout: true },
@@ -77,6 +80,13 @@ export const routeAdmin = [
 
     { path: '/to-quan-ly', component: ToQuanLy, layout: true },
     { path: '/danh-muc-the', component: DanhMucThe, layout: true },
+
+
+    { path: '/dang-bai', component: DangBai, layout: true},
+
+    { path: '/danh-sach-bai-viet', component: DanhMucBaiViet, layout: true},
+    { path: '/to-quan-ly', component: ToQuanLy, layout: true},
+    { path: '/danh-muc-the', component: DanhMucThe, layout: true},
     { path: '/kho-hang', component: SanPham, layout: true }
 ];
 // export const publicRoutes = [

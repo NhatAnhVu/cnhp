@@ -75,7 +75,7 @@ export const routeAdmin = [
 //   // { path: '/upload', component: Upload, layout: HeaderOnly },
 // ]
 export function Router() {
-  
+
     return (
         <BrowserRouter>
             <Routes>
@@ -221,7 +221,7 @@ export function Router() {
 
                     />
                 })}
-                
+
             </Routes>
         </BrowserRouter>
     );

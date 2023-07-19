@@ -29,9 +29,9 @@ const items = [
     ]),
     getItem('Dịch vụ', 'sub2', <AppstoreOutlined />, [
         getItem('Lắp đặt/Sửa chữa máy nước', '/dv-lap-dat-may-nuoc'),
-        getItem('Sang tên hợp đồng DVCN', '/sang-ten-hop-dong-dvcn'),
-        getItem('Cấp lại hợp đồng DVCN', '/cap-lai-hop-dong-dvcn'),
-        getItem('Thanh toán trực tuyến', '/thanh-toan-truc-tuyen'),
+        getItem('Sang tên hợp đồng DVCN', '/dv-sang-ten-hop-dong'),
+        getItem('Cấp lại hợp đồng DVCN', '/dv-cap-lai-hop-dong'),
+        getItem('Đăng ký thanh toán tiền nước', '/dv-thanh-toan-tien-nuoc'),
         getItem('Sửa chữa (ĐH, mạng lưới cấp nước sau đồng hồ)', '/dv-sua-chua'),
         getItem('Đăng ký thay đổi thông tin', '/dv-thong-tin-khach-hang'),
         getItem('Tra cứu sử dụng nước', '/dv-tra-cuu'),
@@ -73,7 +73,7 @@ const LayoutAdmin = ({ children }) => {
     return (
         <Wrapper>
             <MainLayout />
-            <BreadcrumbStyled
+            {/* <BreadcrumbStyled
                 separator=">"
                 items={[
                     {
@@ -88,7 +88,7 @@ const LayoutAdmin = ({ children }) => {
                         title: 'An Application',
                     },
                 ]}
-            />
+            /> */}
             <WrapperContent>
                 <Row gutter={15}>
                     <Col span={4} style={{ height: '100vh' }}>

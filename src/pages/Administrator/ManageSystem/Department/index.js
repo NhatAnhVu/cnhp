@@ -5,6 +5,7 @@ import { Row, Col, Input, Divider } from 'antd';
 import ListDepartment from './components/ListDepartment';
 import ListPositions from './components/ListPositions';
 import { DepartmentStyled } from './styles';
+
 const Department = () => {
     const { Search } = Input;
     const onSearch = (value) => console.log(value);

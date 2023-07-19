@@ -1,29 +1,29 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getDetailOverView, getOverview } from "../services/apis/overview";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { getDetailOverView, getOverview } from '../services/apis/overview';
 
 const initialState = {
     overViewGet: null,
     status: 'idle',
     error: null
-}
+};
 
 const overViewSlice = createSlice({
-    name: 'overview' ,
+    name: 'overview',
     initialState,
     extraReducers: (builder) => {
         builder
-        //fetchOverView
-        .addCase(fetchOverView.pending, (state) => {
-            state.status = 'loading'
-        })
-        .addCase(fetchOverView.fulfilled, (state, action) => {
-            state.status = 'succeeded'
-            state.overViewGet = action.payload
-        })
-        .addCase(fetchOverView.rejected, (state, action) => {
-            state.status = 'failed';
-            state.error = action.error.message;
-        })
+            //fetchOverView
+            .addCase(fetchOverView.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchOverView.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.overViewGet = action.payload;
+            })
+            .addCase(fetchOverView.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            });
     }
 });
 
@@ -48,21 +48,15 @@ const overViewSlice = createSlice({
 
 //fetDetailOverView
 
-
-export const fetchOverView = createAsyncThunk(
-    "overview/fetchOverView", async(
-        body
-    , {rejectWithValue}) => {
-        try {
-            const response = await getOverview(
-                body
-            );
-            return response;
-        } catch (error) {
-            return rejectWithValue(error);
-        }
+export const fetchOverView = createAsyncThunk('overview/fetchOverView', async (body, { rejectWithValue }) => {
+    try {
+        const response = await getOverview(body);
+        console.log('111111111111', response);
+        return response;
+    } catch (error) {
+        return rejectWithValue(error);
     }
-);
+});
 // export const fetchDetailsOverView = createAsyncThunk(
 //     "overview/fetchDetailsOverView", async(
 //         body
@@ -78,5 +72,4 @@ export const fetchOverView = createAsyncThunk(
 //     }
 // );
 
-
-export default overViewSlice.reducer
+export default overViewSlice.reducer;

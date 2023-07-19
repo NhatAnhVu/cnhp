@@ -55,7 +55,7 @@ import { Fragment } from 'react';
 // import HoaDonNuoc from '../pages/Admin/HoaDonNuoc';
 // import DonHang from '../pages/Admin/DonHang';
 import WaterBill from '../pages/Administrator/WaterBill';
-import Order from '../pages/Administrator/Order';
+// import Order from '../pages/Administrator/Order';
 import TongQuan from '../pages/Administrator/Genaral/Genaral';
 import DanhMucThe from '../pages/Administrator/ManagePosts/CategoryCard';
 import SanPham from '../pages/Administrator/Products/Products';
@@ -67,7 +67,7 @@ import DangBai from '../pages/Administrator/ManagePosts/Posts/Posts';
 import ListUser from '../pages/Administrator/ManageSystem/ListUser';
 import EnterPrise from '../pages/Administrator/ManageSystem/EnterPrise';
 
-import Order from "../pages/Administrator/Order";
+import Order from '../pages/Administrator/Order';
 import InstalltionService from '../pages/Administrator/Services/InstalltionService';
 import ContractNameService from '../pages/Administrator/Services/ContractNameService';
 import ContractRenewalService from '../pages/Administrator/Services/ContractRenewalService';
@@ -77,7 +77,7 @@ import EditInfoService from '../pages/Administrator/Services/EditInfoService';
 import SearchInfoService from '../pages/Administrator/Services/SearchInfoService';
 
 export const routeAdmin = [
-    // { path: '/tong-quan', component: TongQuan, layout: true },
+    { path: '/tong-quan', component: TongQuan, layout: true },
     { path: '/hoa-don-nuoc', component: WaterBill, layout: true },
     { path: '/don-hang', component: Order, layout: true },
     { path: '/dv-lap-dat-may-nuoc', component: InstalltionService, layout: true },

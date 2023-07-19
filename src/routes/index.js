@@ -65,6 +65,7 @@ import UserDirectory from '../pages/Administrator/ManageSystem/UserDirectory';
 import DanhMucBaiViet from '../pages/Administrator/ManagePosts/ManagePosts';
 import DangBai from '../pages/Administrator/ManagePosts/Posts/Posts';
 import ListUser from '../pages/Administrator/ManageSystem/ListUser';
+import EnterPrise from '../pages/Administrator/ManageSystem/EnterPrise';
 
 import Order from "../pages/Administrator/Order";
 import InstalltionService from '../pages/Administrator/Services/InstalltionService';
@@ -94,6 +95,7 @@ export const routeAdmin = [
     { path: '/phong-ban-chuc-vu', component: Department, layout: true },
     { path: '/danh-ba-nguoi-dung', component: UserDirectory, layout: true },
     { path: '/phan-quyen', component: ListUser, layout: true },
+    { path: '/danh-ba-doanh-nghiep', component: EnterPrise, layout: true },
 
     { path: '/to-quan-ly', component: ToQuanLy, layout: true },
     { path: '/danh-muc-the', component: DanhMucThe, layout: true },

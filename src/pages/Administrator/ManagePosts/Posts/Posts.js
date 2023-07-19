@@ -3,6 +3,7 @@ import { Card, Col, Form, Input, Row, Select } from "antd"
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload } from 'antd';
 import FormItem from 'antd/es/form/FormItem';
+import TinyEditor from '../../Products/components/TinyEditor';
 
 const { TextArea } = Input;
 
@@ -61,7 +62,8 @@ const Posts = () => {
                         <TextArea rows={4} placeholder="Nhập nội dung" maxLength={6} />
                     </FormItem>
                     <FormItem name="name" label="Nôi dung bài viết">
-                        <TextArea rows={4} placeholder="Nhập nội dung" maxLength={6} />
+                        {/* <TextArea rows={4} placeholder="Nhập nội dung" maxLength={6} /> */}
+                        <TinyEditor />
                     </FormItem>
                     <FormItem name="name" label="Thẻ (từ khóa)">
                         <Select

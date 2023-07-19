@@ -79,4 +79,4 @@ export const fetchOverView = createAsyncThunk(
 // );
 
 
-export default overViewSlice.reducer
+export default overViewSlice.reducer;

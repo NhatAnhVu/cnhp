@@ -9,7 +9,6 @@ import { ReactComponent as OrderStep2Icon } from '../../../../../common/images/o
 import { ReactComponent as OrderStep3Icon } from '../../../../../common/images/order-step-3.svg'
 import { ReactComponent as OrderStep4Icon } from '../../../../../common/images/order-step-4.svg'
 
-const description = 'This is a description.';
 const items = [
     {
         title: 'Chờ xác nhận',
@@ -28,8 +27,6 @@ const items = [
     },
     {
         title: 'Đánh giá',
-
-
         icon: <OrderStep4Icon />,
     },
 ];

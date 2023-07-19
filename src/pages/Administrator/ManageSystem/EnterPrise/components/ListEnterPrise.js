@@ -5,9 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Modal } from 'antd';
 import { ExclamationCircleFilled } from '@ant-design/icons';
-import ModalAdd from './ModalAdd';
 const { confirm } = Modal;
-function ListPositions() {
+function ListEnterPrise() {
     const [hoveredRow, setHoveredRow] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -116,9 +115,8 @@ function ListPositions() {
                 }}
                 bordered
             />
-            <ModalAdd open={isModalOpen} onOk={handleOk} onCancel={handleCancel} />
         </>
     );
 }
 
-export default ListPositions;
+export default ListEnterPrise;

@@ -3,10 +3,11 @@ import { Row, Col, Input, Divider } from 'antd';
 import { colors } from '../../../../styles';
 import ListDirector from './components/ListDirector';
 import ListDepartment from '../Department/components/ListDepartment';
+import { ManageSystemStyled } from '../styles';
 
 function UserDirectory() {
     return (
-        <>
+        <ManageSystemStyled>
             <div className="head-group">
                 <div className="title">Phòng ban - Chức danh</div>
                 <div>
@@ -25,7 +26,7 @@ function UserDirectory() {
                     <ListDirector />
                 </Col>
             </Row>
-        </>
+        </ManageSystemStyled>
     );
 }
 

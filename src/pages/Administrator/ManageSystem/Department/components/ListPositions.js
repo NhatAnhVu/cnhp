@@ -39,6 +39,10 @@ function ListPositions() {
         setIsModalOpen(false);
     };
 
+    const handleDataSubmit = (data) => {
+        setdataListView((prev) => [...prev, data]);
+    };
+
     const columns = [
         {
             title: 'Stt',
@@ -123,7 +127,7 @@ function ListPositions() {
                 }}
                 bordered
             />
-            <ModalAdd open={isModalOpen} onOk={handleOk} onCancel={handleCancel} dataInfo={dataInfo} />
+            <ModalAdd open={isModalOpen} onOk={handleOk} onCancel={handleCancel} onDataSubmit={handleDataSubmit} dataInfo={dataInfo} />
         </>
     );
 }

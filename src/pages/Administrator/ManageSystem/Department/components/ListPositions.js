@@ -8,12 +8,15 @@ import { ExclamationCircleFilled } from '@ant-design/icons';
 import ModalAdd from './ModalAdd';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPosition } from '../../../../../reducers/positionSlice';
+import { UpdateListPosition } from '../../../../../services/apis/positions';
 const { confirm } = Modal;
 function ListPositions() {
     const [dataListView, setdataListView] = useState([]);
-    const [hoveredRow, setHoveredRow] = useState(null);
+    // const [hoveredRow, setHoveredRow] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [dataInfo, setDataInfo] = useState(undefined);
+    const [newNameValue, setNewNameValue] = useState('');
+    const [newNoteValue, setNewNoteValue] = useState('');
     const dispatch = useDispatch();
 
     const listView = useSelector((state) => state?.position?.positionGet?.Object?.data);
@@ -43,6 +46,44 @@ function ListPositions() {
         setdataListView((prev) => [...prev, data]);
     };
 
+    const onFinish = (values) => {
+        console.log('123123123213', values);
+        dispatch(
+            UpdateListPosition({
+                PositionID: dataInfo.PositionID,
+                PositionName: dataInfo.PositionName,
+                Note: dataInfo.Note
+            })
+        ).then(() => {
+            dispatch(
+                fetchPosition({
+                    TextSearch: '',
+                    PageSize: 20,
+                    CurrentPage: 1
+                })
+            );
+        });
+    };
+
+    console.log('dataInfo', dataInfo);
+
+    const handlePositionChange = (e) => {
+        setNewNameValue(e.target.value);
+        setDataInfo({
+            ...dataInfo,
+            PositionName: e.target.value
+        });
+        console.log(newNameValue);
+    };
+
+    const handleNoteChange = (e) => {
+        setNewNoteValue(e.target.value);
+        setDataInfo({
+            ...dataInfo,
+            Note: e.target.value
+        });
+    };
+
     const columns = [
         {
             title: 'Stt',
@@ -63,48 +104,48 @@ function ListPositions() {
             render: (value, record) => (
                 <div className="action">
                     <div>{value}</div>
-                    {hoveredRow === record.PositionID && (
-                        <>
-                            <Row gutter={8} className="edit">
-                                <Col span={12}>
-                                    <CustomButton
-                                        className={'icon-edit icon'}
-                                        onClick={() => {
-                                            setIsModalOpen(true);
-                                            setDataInfo(record);
-                                        }}
-                                    >
-                                        <FontAwesomeIcon icon={faPen} />
-                                    </CustomButton>
-                                </Col>
-                                <Col span={12}>
-                                    <CustomButton
-                                        className={'icon-delete icon'}
-                                        onClick={() => {
-                                            // confirm({
-                                            //     title: 'Are you sure delete this task?',
-                                            //     icon: <ExclamationCircleFilled />,
-                                            //     content: 'Some descriptions',
-                                            //     okText: 'Yes',
-                                            //     okType: 'danger',
-                                            //     cancelText: 'No',
-                                            //     onOk() {
-                                            //         console.log('OK');
-                                            //     },
-                                            //     onCancel() {
-                                            //         console.log('Cancel');
-                                            //     }
-                                            // });
 
-                                            console.log(record);
-                                        }}
-                                    >
-                                        <FontAwesomeIcon icon={faTrash} />
-                                    </CustomButton>
-                                </Col>
-                            </Row>
-                        </>
-                    )}
+                    <>
+                        <Row gutter={8} className="edit">
+                            <Col span={12}>
+                                <CustomButton
+                                    className={'icon-edit icon'}
+                                    onClick={() => {
+                                        setIsModalOpen(true);
+                                        setDataInfo(record);
+                                        // console.log(record.PositionID);
+                                    }}
+                                >
+                                    <FontAwesomeIcon icon={faPen} />
+                                </CustomButton>
+                            </Col>
+                            <Col span={12}>
+                                <CustomButton
+                                    className={'icon-delete icon'}
+                                    onClick={() => {
+                                        // confirm({
+                                        //     title: 'Are you sure delete this task?',
+                                        //     icon: <ExclamationCircleFilled />,
+                                        //     content: 'Some descriptions',
+                                        //     okText: 'Yes',
+                                        //     okType: 'danger',
+                                        //     cancelText: 'No',
+                                        //     onOk() {
+                                        //         console.log('OK');
+                                        //     },
+                                        //     onCancel() {
+                                        //         console.log('Cancel');
+                                        //     }
+                                        // });
+
+                                        console.log(record);
+                                    }}
+                                >
+                                    <FontAwesomeIcon icon={faTrash} />
+                                </CustomButton>
+                            </Col>
+                        </Row>
+                    </>
                 </div>
             )
         }
@@ -115,19 +156,31 @@ function ListPositions() {
             <CustomTable
                 columns={columns}
                 dataSource={dataListView}
-                onRow={(record, rowIndex) => {
-                    return {
-                        onMouseEnter: () => {
-                            setHoveredRow(record.PositionID);
-                        }, // mouse enter row
-                        onMouseLeave: () => {
-                            setHoveredRow(null);
-                        } // mouse leave row
-                    };
-                }}
+                // onRow={(record, rowIndex) => {
+                //     return {
+                //         onMouseEnter: () => {
+                //             setHoveredRow(record.PositionID);
+                //         }, // mouse enter row
+                //         onMouseLeave: () => {
+                //             setHoveredRow(null);
+                //         } // mouse leave row
+                //     };
+                // }}
                 bordered
             />
-            <ModalAdd open={isModalOpen} onOk={handleOk} onCancel={handleCancel} onDataSubmit={handleDataSubmit} dataInfo={dataInfo} />
+            <ModalAdd
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                onDataSubmit={handleDataSubmit}
+                dataInfo={dataInfo}
+                onFinish={onFinish}
+                onPositonChange={handlePositionChange}
+                onNoteChange={handleNoteChange}
+                closeModalClick={() => {
+                    setIsModalOpen(false);
+                }}
+            />
         </>
     );
 }

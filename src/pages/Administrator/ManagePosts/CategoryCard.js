@@ -67,10 +67,10 @@ const CategoryCard = () => {
     const tagsLists = useSelector((state) => state?.tags?.tagsList?.tagsList?.Object?.Data);
 
 
-    console.log("dataListTags: >>", tagsLists);
+    // console.log("dataListTags: >>", tagsLists);
     const extractTagsName = tagsLists?.map((item) => item.TagsName);
 
-    console.log("extractTagsName:>>>", extractTagsName);
+    // console.log("extractTagsName:>>>", extractTagsName);
 
     useEffect(() => {
         setTagsNameList(extractTagsName);
@@ -178,6 +178,8 @@ const CategoryCard = () => {
     }
     // console.log("nameValueInittial>>>", nameValueInittial);
 
+
+    //search card
     const handleSearch = (value) => {
         const filteredData = tagsLists.filter((item) => {
             return item.TagsName.toLowerCase().includes(value.toLowerCase());
@@ -187,7 +189,7 @@ const CategoryCard = () => {
 
 
     const handleChangeSearch = (event) => {
-        console.log(event.target.value);
+        // console.log(event.target.value);
     }
 
   return (

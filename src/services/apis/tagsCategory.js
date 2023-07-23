@@ -1,7 +1,7 @@
 import axiosInstance from "../axios";
 
+//get Tabs list
 export const getAllCategoryTags = () => axiosInstance.get("Tags/GetAllForCombobox");
-
 
 export const getListsTag = (body) => axiosInstance.post("Tags/GetList", body);
 

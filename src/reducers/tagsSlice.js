@@ -28,6 +28,8 @@ const tagsSlice = createSlice({
     }
 })
 
+
+//get list
 const tagsListSlice = createSlice({
     name: 'tagsList',
     initialState: {
@@ -52,6 +54,7 @@ const tagsListSlice = createSlice({
     }
 })
 
+//delete
 const deteleTagsSlice = createAsyncThunk({
     name: 'deleteTagsList',
     initialState: {
@@ -76,7 +79,7 @@ const deteleTagsSlice = createAsyncThunk({
     }
 })
 
-//Slide update TagList
+//update TagList
 const updateTagSlice = createSlice({
     name: 'updateTagsList',
     initialState: {
@@ -104,7 +107,7 @@ const updateTagSlice = createSlice({
     }
 })
 
-//slide add tags list
+//add tags list
 const addTagSlice = createSlice({
     name: 'addTagsList',
     initialState: {

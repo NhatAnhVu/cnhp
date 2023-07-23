@@ -170,7 +170,7 @@ const Genaral = () => {
   const dispatch = useDispatch();
 
 
-  const overView = useSelector((state)=> state?.overView?.overViewGet?.Object);
+  const overView = useSelector((state)=> state?.overView?.overViewGet?.overViewGet?.Object);
 
   //gui resquest body api
   useEffect(() => {
@@ -180,11 +180,11 @@ const Genaral = () => {
     }));
   }, []);
 
-  useEffect(() => {
-    setdataOverView(overView);
-  }, [overView])
+  // useEffect(() => {
+  //   setdataOverView(overView);
+  // }, [overView])
 
-  console.log('dataOverView', dataOverView);
+  console.log('dataOverView', overView);
 
 
   const showModal1 = (title) => {

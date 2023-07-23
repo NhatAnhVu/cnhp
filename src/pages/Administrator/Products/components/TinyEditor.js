@@ -1,21 +1,24 @@
 import { Editor } from '@tinymce/tinymce-react';
 import { useState } from 'react';
 
-function TinyEditor({ loading }) {
+function TinyEditor(value) {
+    // const handleEditorChange = {props}
     const [text, setText] = useState('');
-    const [value, setValue] = useState('<p>BlaBLa</p>');
+    const [values, setValues] = useState('');
+
+    const [content, setContent] = useState("");
 
     console.log('value ===>', value);
-    console.log('text ===>', text);
+    // console.log('text ===>', text);
 
     return (
         <Editor
             apiKey="ekjbux3o3ibi4jxd9zz545cyj67o7g2ahlz4skafkt64r1iy"
             onEditorChange={(newValue, editor) => {
-                setValue(newValue);
+                setValues(newValue);
                 setText(editor.getContent({ format: 'text' }));
             }}
-            value={value}
+            value={values}
             loading={true}
         />
     );

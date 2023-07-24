@@ -1,16 +1,20 @@
 import React from 'react';
 import { Space, Table, Tag } from 'antd';
 import { TableStyled } from './styles';
+import { GetListWaterBill } from '../../../../../services/apis/GetListWaterBill';
+import { useEffect } from 'react';
+import { useState } from 'react';
 const columns = [
     {
         title: 'STT',
-        dataIndex: 'key',
-        key: 'stt',
+        dataIndex: 'index',
+        key: 'index',
+        width: 60,
     },
     {
         title: 'Mã hoá đơn',
-        dataIndex: 'billID',
-        key: 'billID',
+        dataIndex: 'BillCode',
+        key: 'BillCode',
     },
     {
         title: (
@@ -21,12 +25,13 @@ const columns = [
             </div>
         ),
         dataIndex: '',
+        width: 200,
         key: 'name',
         render: (_, record) => (
             <div>
-                <span>{record.customerID}</span>
+                <span>{record.UserCode}</span>
                 <br />
-                <span className='italic'>{record.name}</span>
+                <span className='italic'>{record.FullName}</span>
             </div>
         ),
     },
@@ -39,12 +44,13 @@ const columns = [
             </div>
         ),
         dataIndex: '',
+        width: 200,
         key: '',
         render: (_, record) => (
             <div>
-                <span>{record.phoneNumber}</span>
+                <span>{record.PhoneNumber}</span>
                 <br />
-                <span className='italic'>{record.address}</span>
+                <span className='italic'>{record.Address}</span>
             </div>
         ),
     },
@@ -60,40 +66,36 @@ const columns = [
         key: '',
         render: (_, record) => (
             <div>
-                <span>{record.newIndex}</span>
+                <span>{record.NewIndex}</span>
                 <br />
-                <span className='italic'>{record.oldIndex}</span>
+                <span className='italic'>{record.OldIndex}</span>
             </div>
         ),
     },
 
     {
         title: 'Tiêu thụ',
-        dataIndex: 'address',
-        key: 'address',
-        render: (_, record) => (
-            <div>
-                <span>{record.newIndex - record.oldIndex}</span>
+        dataIndex: 'Consume',
+        key: 'Consume',
 
-            </div>
-        ),
     },
     {
         title: 'Số tiền',
-        dataIndex: 'total',
-        key: 'total',
+        dataIndex: 'PayAmount',
+        key: 'PayAmount',
     },
     {
         title: 'Trạng thái',
-        key: 'tags',
-        dataIndex: 'tags',
+        key: 'BillStatus',
+        dataIndex: '',
+        width: 200,
         render: (_, record) => (
 
             <div>
                 {record.status === 'dang-thu' ? (
                     <span className='item-blue'>Đang thu</span>
-                ) : record.status === 'chua-nhap' ? (
-                    <span className='item-orange'>Chưa nhập hoá đơn mới</span>
+                ) : record.BillStatus === 1 ? (
+                    <span className='item-orange'>{record.BillStatusName}</span>
                 ) : record.status === 'da-thanh-toan' ? (
                     <span className='item-green'>Đã thanh toán</span>
                 ) : record.status === 'qua-han' ? (
@@ -105,38 +107,42 @@ const columns = [
     },
 
 ];
-const data = [
-    {
-        key: '1',
-        billID: '0001',
-        customerID: '01232423',
-        name: 'John Brown',
-        phoneNumber: '0972324324',
-        address: 'Ha Noi',
-        newIndex: '100',
-        oldIndex: '50',
-        total: '500000',
-        status: 'dang-thu'
-    },
-    {
-        key: '2',
-        billID: '0002',
-        customerID: '01232423',
-        name: 'John Brown',
-        phoneNumber: '0972324324',
-        address: 'Ha Noi',
-        newIndex: '100',
-        oldIndex: '50',
-        total: '500000',
-        status: 'chua-nhap'
-    },
 
-];
-const ListBill = () => (
-    <TableStyled
-        columns={columns}
-        dataSource={data}
-        bordered
-    />
-);
+const ListBill = ({ RegionId, TextSearch, Status, Month, Year }) => {
+    const [listBill, setListBill] = useState([])
+
+    const dataWithSTT = listBill.map((item, index) => ({
+        ...item,
+        index: index + 1, // Tính toán giá trị STT bằng cách thêm 1 vào index
+    }));
+
+    
+    useEffect(() => {
+
+        const getListLocation = async () => {
+            const response = await GetListWaterBill({
+                "TextSearch": TextSearch || "",
+                "PageSize": 20,
+                "CurrentPage": 1,
+                "Month": 1,
+                "Year": 2222,
+                "Status": Status || 0,
+                "RegionID": RegionId || 4050
+            });
+            setListBill(response.Object.data);
+            console.log(response.Object.data);
+        }
+        getListLocation();
+
+    }, [RegionId, TextSearch, Status])
+
+    return (
+        <TableStyled
+            columns={columns}
+            dataSource={dataWithSTT}
+            bordered
+            scroll={{ y: 600 }}
+        />
+    );
+}
 export default ListBill;

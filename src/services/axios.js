@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://apicnhp.h2qsolution.com/api/",
+  baseURL: "http://103.163.215.105:8060/api/",
   timeout: 3000,
 });
 

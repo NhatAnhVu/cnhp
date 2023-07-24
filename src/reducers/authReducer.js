@@ -2,11 +2,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Login, Logout } from "../services/apis/auth";
 
 const initialState = {
-  isAuthenticated: false,
-  user: null,
-  loading: false,
-  error: null,
-  // token: null
+    isAuthenticated: false,
+    user: null,
+    loading: false,
+    error: null,
+    // token: null
 };
 
 const authSlice = createSlice({
@@ -21,7 +21,7 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isAuthenticated = true;
-        state.user = action.payload.Object.Token;
+        state.user = action.payload.Object;
         state.loading = false;
         state.error = null;
         // state.token = action.payload
@@ -46,24 +46,27 @@ const authSlice = createSlice({
 // gui request dang nhap
 export const login = createAsyncThunk(
   "auth/login",
-  async ({ Username, Password }, { rejectWithValue }) => {
+  async ({ UserName, Password }, { rejectWithValue }) => {
     try {
-      const response = await Login({ Username, Password });
+      const response = await Login({ UserName, Password });
       // console.log("response>>", response.Object.Token.Token);
       return response;
     } catch (error) {
+      debugger;
       return rejectWithValue(error);
     }
-  }
 );
 
-export const logout = createAsyncThunk("auth/logout", async () => {
-  try {
-    const response = await Logout();
-    return response;
-  } catch (error) {
-    console.log("Logout failed:", error);
-  }
-});
+export const logout = createAsyncThunk(
+    "auth/logout",
+    async () => {
+        try {
+            const response = await Logout();
+            // localStorage.removeItem('token')
+            return response;
+        } catch (error) {
+            console.log("Logout failed:", error);
+        }
+    });
 
 export default authSlice.reducer;

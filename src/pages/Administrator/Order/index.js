@@ -1,11 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Wrapper, WrapperButton, WrapperSearch } from './styles'
 import { Button, Col, DatePicker, Divider, Form, Input, Row, Select } from 'antd'
 import TitleComponent from '../../../components/TitleComponent';
 import ListOrder from './components/ListOrder';
+import moment from 'moment';
 const { Search } = Input;
 const { RangePicker } = DatePicker;
 const Order = () => {
+    const [textSearch, setTextSeach] = useState("");
+    const [requestFromDate, setRequestFromDate] = useState("");
+    const [requestToDate, setRequestToDate] = useState("");
+    const [deliveryFromDate, setDeliveryFromDate] = useState("");
+    const [deliveryToDate, setDeliveryToDate] = useState("");
+    const [status, setStatus] = useState("");
+
+    const outputFormat = "YYYY-MM-DDTHH:mm:ssZ";
+    
+    const handleSearch = (value) => {
+        setTextSeach(value);
+
+    };
+
+    const handleDateRangeRequest = (dates) => {
+
+        setRequestFromDate(moment(dates[0].$d).format(outputFormat));
+        setRequestToDate(moment(dates[1].$d).format(outputFormat));
+        
+    };
+    const handleDateRangeDelivery = (dates) => {
+
+        setDeliveryFromDate(moment(dates[0].$d).format(outputFormat));
+        setDeliveryToDate(moment(dates[1].$d).format(outputFormat));
+        
+    };
+
+    const handleSelectStatus = (value) =>{
+        setStatus(value)
+    }
     return (
         <Wrapper>
             <WrapperSearch>
@@ -14,6 +45,7 @@ const Order = () => {
                     <Row gutter={15}>
                         <Col span={8}>
                             <Search
+                                onSearch={handleSearch}
                                 placeholder="Nhập mã, tên, số điện thoại khách hàng"
                             />
 
@@ -22,6 +54,7 @@ const Order = () => {
                             <RangePicker
                                 placeholder={['Ngày yêu cầu', '']}
                                 style={{ width: '100%' }}
+                                onChange={handleDateRangeRequest}
                             />
 
                         </Col>
@@ -29,7 +62,7 @@ const Order = () => {
                             <RangePicker
                                 placeholder={['Ngày giao hàng', '']}
                                 style={{ width: '100%' }}
-
+                                onChange={handleDateRangeDelivery}
                             />
 
                         </Col>
@@ -38,28 +71,28 @@ const Order = () => {
                                 defaultValue="Tất cả"
                                 placeholder='Trạng thái'
                                 style={{ width: '100%' }}
-                                onChange={() => { console.log('heheh'); }}
+                                onChange={handleSelectStatus}
                                 options={[
                                     {
-                                        value: 'Tất cả',
+                                        value: 0,
                                         label: 'Tất cả',
                                     },
                                     {
-                                        value: 'Chờ xác nhận',
-                                        label: 'Chưa nhập phiếu mới',
+                                        value: 1,
+                                        label: 'Chờ xác nhận',
                                     },
                                     {
-                                        value: 'Đang giao',
-                                        label: 'Đang thu',
+                                        value: 2,
+                                        label: 'Đang giao',
                                     },
                                     {
-                                        value: 'Đã giao',
-                                        label: 'Đã thanh toán',
+                                        value: 3,
+                                        label: 'Đã giao',
 
                                     },
                                     {
-                                        value: 'Đã huỷ',
-                                        label: 'Quá hạn nộp',
+                                        value: 4,
+                                        label: 'Đã huỷ',
 
                                     },
 
@@ -79,7 +112,7 @@ const Order = () => {
                 </WrapperButton>
             </TitleComponent>
 
-            <ListOrder />
+            <ListOrder textSearch={textSearch} requestFromDate={requestFromDate} requestToDate={requestToDate} deliveryFromDate={deliveryFromDate} deliveryToDate={deliveryToDate} status={status} />
         </Wrapper>
     )
 }

@@ -8,6 +8,8 @@ export const WrapperBody = styled.div`
     box-shadow: rgba(21, 67, 152, 0.15) 0px 0px 10px;
     border-radius: 8px;
     font-size: 14px;
+
+    
     .top-modal{
         display: flex;
         flex-direction:row-reverse;
@@ -71,6 +73,46 @@ export const StepsStyled = styled(Steps)`
         font-size: 14px;
         color: rgba(0,0,0,.85);
         
+    }
+
+    .ant-steps-item-active {
+        .custom-color-icon1{
+            background:linear-gradient(90deg, rgba(30,66,150,1) 0%, rgba(105,48,103,1) 31%, rgba(230,19,27,1) 100%) ;
+            border-radius: 50%;
+            
+            circle{
+                stroke: unset;
+            }
+            path{
+                stroke: white;
+            }
+        }
+        .custom-color-icon2{
+            background:linear-gradient(90deg, rgba(30,66,150,1) 0%, rgba(105,48,103,1) 31%, rgba(230,19,27,1) 100%) ;
+            border-radius: 50%;
+            
+            circle{
+                stroke: unset;
+                fill: unset;
+            }
+            path{
+                stroke: white;
+            }
+            
+        }
+        .custom-color-icon4{
+            background:linear-gradient(90deg, rgba(30,66,150,1) 0%, rgba(105,48,103,1) 31%, rgba(230,19,27,1) 100%) ;
+            border-radius: 50%;
+            
+            circle{
+                stroke: unset;
+                fill: unset;
+            }
+            
+            path{
+                stroke: white;
+            }
+        }
     }
 `
 

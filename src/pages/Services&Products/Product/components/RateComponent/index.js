@@ -129,7 +129,7 @@ const RateComponent = () => {
 
                 <Tabs.TabPane tab="Tất cả" key='tab1'>
                     <RateItem>
-                        
+
                     </RateItem>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab='5 sao' key='tab2'>

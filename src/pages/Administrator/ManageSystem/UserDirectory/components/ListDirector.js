@@ -74,7 +74,7 @@ function ListDirector() {
                     <div>{value}</div>
                     {hoveredRow == record.key && (
                         <>
-                            <Row gutter={8}>
+                            <Row gutter={8} className="edit">
                                 <Col span={12}>
                                     <CustomButton className={'icon-edit icon'} onClick={showModal}>
                                         <FontAwesomeIcon icon={faPen} />

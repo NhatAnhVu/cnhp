@@ -13,10 +13,10 @@ import { WapperSigin, FormSigin, ImgFB } from './style';
 import Services from '../Services&Products/Services'
 
 function Login() {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const [form] = useForm();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const [form] = useForm();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
 const onFinish = (values) => {
   dispatch(login({
@@ -25,108 +25,109 @@ const onFinish = (values) => {
   }));
 };
 
-if(isAuthenticated === true) {
-  navigate("/tong-quan")
-}
 
-const onFinishFailed = (errorInfo) => {
-  console.log('Failed:', errorInfo);
-};
+    if (isAuthenticated === true) {
+        navigate("/tong-quan")
+    }
 
-  return (
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+    };
 
-    <WapperSigin>
-    <div>
-        <img src={img1} style={{width: '100%'}}/>
-        <Row>
-            <Col span={16}>
-                <Services/>
-            </Col>
-            <Col span={8}>
-                <FormSigin>
-                    <h1>Đăng nhập</h1>
-                    <Form
-                        name="basic"
-                        labelCol={{
-                        span: 24,
-                        }}
-                        wrapperCol={{
-                        span: 0,
-                        }}
-                        style={{
-                        width: 426,
-                        }}
-                        initialValues={{
-                        remember: true,
-                        }}
-                        onFinish={onFinish}
-                        onFinishFailed={onFinishFailed}
-                        autoComplete="off"
-                        className='form'
-                        layout="vertical" 
-                        form={form}
-                    >
-                        <Form.Item
-                        // label="Username"
-                        name="Username"
-                        rules={[
-                            {
-                            required: true,
-                            message: 'Please input your username!',
-                            },
-                        ]}
-                        >
-                        <Input/>
-                        </Form.Item>
+    return (
 
-                        <Form.Item
-                        // label="Password"
-                        name="Password"
-                        rules={[
-                            {
-                            required: true,
-                            message: 'Please input your password!',
-                            },
-                        ]}
-                        >
-                        <Input.Password/>
-                        </Form.Item>
+        <WapperSigin>
+            <div>
+                <img src={img1} style={{ width: '100%' }} />
+                <Row>
+                    <Col span={16}>
+                        <Services />
+                    </Col>
+                    <Col span={8}>
+                        <FormSigin>
+                            <h1>Đăng nhập</h1>
+                            <Form
+                                name="basic"
+                                labelCol={{
+                                    span: 24,
+                                }}
+                                wrapperCol={{
+                                    span: 0,
+                                }}
+                                style={{
+                                    width: 426,
+                                }}
+                                initialValues={{
+                                    remember: true,
+                                }}
+                                onFinish={onFinish}
+                                onFinishFailed={onFinishFailed}
+                                autoComplete="off"
+                                className='form'
+                                layout="vertical"
+                                form={form}
+                            >
+                                <Form.Item
+                                    // label="Username"
+                                    name="Username"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please input your username!',
+                                        },
+                                    ]}
+                                >
+                                    <Input />
+                                </Form.Item>
 
-                        <Form.Item
-                        name="remember"
-                        valuePropName="checked"
-                        wrapperCol={{
-                            offset: 0,
-                            span: 24,
-                        }}
-                        >
-                        <Checkbox >Nhớ thông tin</Checkbox>
-                        </Form.Item>
+                                <Form.Item
+                                    // label="Password"
+                                    name="Password"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please input your password!',
+                                        },
+                                    ]}
+                                >
+                                    <Input.Password />
+                                </Form.Item>
 
-                        <Form.Item
-                        wrapperCol={{
-                            offset: 8,
-                            span: 16,
-                        }}
-                        >
-                        <Button type="default" htmlType="submit" className='button'
-                        >
-                            Đăng nhập
-                        </Button>
-                        </Form.Item>
-                    </Form>
-                </FormSigin>
+                                <Form.Item
+                                    name="remember"
+                                    valuePropName="checked"
+                                    wrapperCol={{
+                                        offset: 0,
+                                        span: 24,
+                                    }}
+                                >
+                                    <Checkbox >Nhớ thông tin</Checkbox>
+                                </Form.Item>
 
-                <ImgFB>
-                    <img src={img2}></img>
-                </ImgFB>
-            </Col>
-        </Row>
+                                <Form.Item
+                                    wrapperCol={{
+                                        offset: 8,
+                                        span: 16,
+                                    }}
+                                >
+                                    <Button type="default" htmlType="submit" className='button'
+                                    >
+                                        Đăng nhập
+                                    </Button>
+                                </Form.Item>
+                            </Form>
+                        </FormSigin>
 
-        <img src={img3} style={{marginTop: '100px', width: '100%'}}></img>
-    </div>
-</WapperSigin>
-  );
+                        <ImgFB>
+                            <img src={img2}></img>
+                        </ImgFB>
+                    </Col>
+                </Row>
+
+                <img src={img3} style={{ marginTop: '100px', width: '100%' }}></img>
+            </div>
+        </WapperSigin>
+    );
 }
 
 export default Login;

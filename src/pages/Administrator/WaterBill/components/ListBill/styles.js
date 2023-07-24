@@ -15,6 +15,9 @@ export const TableStyled = styled(Table)`
         font-size:13px;
     }
 
+    .ant-table-cell{
+        text-align: center;
+    }
     .ant-table-tbody>tr>.ant-table-cell{
         .italic{
             color: #666;

@@ -55,7 +55,7 @@ import { Fragment } from 'react';
 // import HoaDonNuoc from '../pages/Admin/HoaDonNuoc';
 // import DonHang from '../pages/Admin/DonHang';
 import WaterBill from '../pages/Administrator/WaterBill';
-import Order from '../pages/Administrator/Order';
+// import Order from '../pages/Administrator/Order';
 import TongQuan from '../pages/Administrator/Genaral/Genaral';
 import DanhMucThe from '../pages/Administrator/ManagePosts/CategoryCard';
 import SanPham from '../pages/Administrator/Products/Products';
@@ -64,11 +64,29 @@ import Department from '../pages/Administrator/ManageSystem/Department';
 import UserDirectory from '../pages/Administrator/ManageSystem/UserDirectory';
 import DanhMucBaiViet from '../pages/Administrator/ManagePosts/ManagePosts';
 import DangBai from '../pages/Administrator/ManagePosts/Posts/Posts';
+import ListUser from '../pages/Administrator/ManageSystem/ListUser';
+import EnterPrise from '../pages/Administrator/ManageSystem/EnterPrise';
+
+import Order from '../pages/Administrator/Order';
+import InstalltionService from '../pages/Administrator/Services/InstalltionService';
+import ContractNameService from '../pages/Administrator/Services/ContractNameService';
+import ContractRenewalService from '../pages/Administrator/Services/ContractRenewalService';
+import PaymentService from '../pages/Administrator/Services/PaymentService';
+import RepairService from '../pages/Administrator/Services/RepairService';
+import EditInfoService from '../pages/Administrator/Services/EditInfoService';
+import SearchInfoService from '../pages/Administrator/Services/SearchInfoService';
 
 export const routeAdmin = [
     { path: '/tong-quan', component: TongQuan, layout: true },
     { path: '/hoa-don-nuoc', component: WaterBill, layout: true },
     { path: '/don-hang', component: Order, layout: true },
+    { path: '/dv-lap-dat-may-nuoc', component: InstalltionService, layout: true },
+    { path: '/dv-sang-ten-hop-dong', component: ContractNameService, layout: true },
+    { path: '/dv-cap-lai-hop-dong', component: ContractRenewalService, layout: true },
+    { path: '/dv-thanh-toan-tien-nuoc', component: PaymentService, layout: true },
+    { path: '/dv-sua-chua', component: RepairService, layout: true },
+    { path: '/dv-thong-tin-khach-hang', component: EditInfoService, layout: true },
+    { path: '/dv-tra-cuu', component: SearchInfoService, layout: true },
 
     // SẢn phẩm
     { path: '/kho-hang', component: SanPham, layout: true },
@@ -76,6 +94,8 @@ export const routeAdmin = [
     // Quản trị hệ thống
     { path: '/phong-ban-chuc-vu', component: Department, layout: true },
     { path: '/danh-ba-nguoi-dung', component: UserDirectory, layout: true },
+    { path: '/phan-quyen', component: ListUser, layout: true },
+    { path: '/danh-ba-doanh-nghiep', component: EnterPrise, layout: true },
 
     { path: '/to-quan-ly', component: ToQuanLy, layout: true },
     { path: '/danh-muc-the', component: DanhMucThe, layout: true },

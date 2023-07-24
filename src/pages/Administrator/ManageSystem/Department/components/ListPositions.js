@@ -6,14 +6,30 @@ import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Modal } from 'antd';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import ModalAdd from './ModalAdd';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchPosition } from '../../../../../reducers/positionSlice';
 const { confirm } = Modal;
 function ListPositions() {
+    const [dataListView, setdataListView] = useState([]);
     const [hoveredRow, setHoveredRow] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [dataInfo, setDataInfo] = useState(undefined);
+    const dispatch = useDispatch();
 
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
+    const listView = useSelector((state) => state?.position?.positionGet?.Object?.data);
+
+    useEffect(() => {
+        setdataListView(listView);
+    }, [listView]);
+    useEffect(() => {
+        dispatch(
+            fetchPosition({
+                TextSearch: '',
+                PageSize: 20,
+                CurrentPage: 1
+            })
+        );
+    }, []);
 
     const handleOk = () => {
         setIsModalOpen(false);
@@ -22,24 +38,6 @@ function ListPositions() {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-
-    const dataSource = [
-        {
-            key: '1',
-            positions: 'Giám đốc',
-            note: 'Phó giám đốc'
-        },
-        {
-            key: '2',
-            positions: 'Giám đốc',
-            note: 'Phó giám đốc'
-        },
-        {
-            key: '3',
-            positions: 'Trưởng phòng',
-            note: 'Phó giám đốc'
-        }
-    ];
 
     const columns = [
         {
@@ -51,20 +49,27 @@ function ListPositions() {
         },
         {
             title: 'Tên chức danh',
-            dataIndex: 'positions'
+            dataIndex: 'PositionName'
         },
         {
             title: 'Ghi chú',
-            dataIndex: 'note',
+            dataIndex: 'Note',
+            key: 'note',
             width: 300,
             render: (value, record) => (
                 <div className="action">
                     <div>{value}</div>
-                    {hoveredRow == record.key && (
+                    {hoveredRow === record.PositionID && (
                         <>
-                            <Row gutter={8}>
+                            <Row gutter={8} className="edit">
                                 <Col span={12}>
-                                    <CustomButton className={'icon-edit icon'} onClick={showModal}>
+                                    <CustomButton
+                                        className={'icon-edit icon'}
+                                        onClick={() => {
+                                            setIsModalOpen(true);
+                                            setDataInfo(record);
+                                        }}
+                                    >
                                         <FontAwesomeIcon icon={faPen} />
                                     </CustomButton>
                                 </Col>
@@ -72,20 +77,22 @@ function ListPositions() {
                                     <CustomButton
                                         className={'icon-delete icon'}
                                         onClick={() => {
-                                            confirm({
-                                                title: 'Are you sure delete this task?',
-                                                icon: <ExclamationCircleFilled />,
-                                                content: 'Some descriptions',
-                                                okText: 'Yes',
-                                                okType: 'danger',
-                                                cancelText: 'No',
-                                                onOk() {
-                                                    console.log('OK');
-                                                },
-                                                onCancel() {
-                                                    console.log('Cancel');
-                                                }
-                                            });
+                                            // confirm({
+                                            //     title: 'Are you sure delete this task?',
+                                            //     icon: <ExclamationCircleFilled />,
+                                            //     content: 'Some descriptions',
+                                            //     okText: 'Yes',
+                                            //     okType: 'danger',
+                                            //     cancelText: 'No',
+                                            //     onOk() {
+                                            //         console.log('OK');
+                                            //     },
+                                            //     onCancel() {
+                                            //         console.log('Cancel');
+                                            //     }
+                                            // });
+
+                                            console.log(record);
                                         }}
                                     >
                                         <FontAwesomeIcon icon={faTrash} />
@@ -103,11 +110,11 @@ function ListPositions() {
         <>
             <CustomTable
                 columns={columns}
-                dataSource={dataSource}
+                dataSource={dataListView}
                 onRow={(record, rowIndex) => {
                     return {
                         onMouseEnter: () => {
-                            setHoveredRow(record.key);
+                            setHoveredRow(record.PositionID);
                         }, // mouse enter row
                         onMouseLeave: () => {
                             setHoveredRow(null);
@@ -116,7 +123,7 @@ function ListPositions() {
                 }}
                 bordered
             />
-            <ModalAdd open={isModalOpen} onOk={handleOk} onCancel={handleCancel} />
+            <ModalAdd open={isModalOpen} onOk={handleOk} onCancel={handleCancel} dataInfo={dataInfo} />
         </>
     );
 }

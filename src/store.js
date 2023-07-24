@@ -7,10 +7,11 @@ import overViewReducer from './reducers/overViewSlice';
 import tagsReducer from './reducers/tagsSlice.js';
 import postCategoryReducer from './reducers/categoryPostsSlice';
 import managementTeamReducer from "./reducers/managementTeamSlice.js";
+import positionSlice from './reducers/positionSlice.js';
 
 const authPersistConfig = {
-  key: "auth",
-  storage,
+    key: 'auth',
+    storage
 };
 
 const rootReducer = combineReducers({
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   overView: overViewReducer, //add OverviewSlice
   tags: tagsReducer,
   postCategory: postCategoryReducer,
-  manage: managementTeamReducer
+  manage: managementTeamReducer,
+  position: positionSlice
 });
 
 const store = configureStore({
@@ -27,6 +29,8 @@ const store = configureStore({
     serializableCheck: false,
   }).concat(logger),
 });
+
+
 
 const persistor = persistStore(store);
 

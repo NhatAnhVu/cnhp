@@ -5,12 +5,12 @@ import { Card } from 'antd';
 import { Button, Dropdown, Modal, DatePicker } from 'antd';
 import {  CalendarOutlined } from '@ant-design/icons';
 import { Col, Divider, Row } from 'antd';
-import img1 from '../../../common/images/imageAdministrator_page/tongbaoicon1.svg'
-import img2 from '../../../common/images/imageAdministrator_page/thongbaoicon2.svg'
-import img3 from '../../../common/images/imageAdministrator_page/thongbaoicon3.svg'
-import img4 from '../../../common/images/imageAdministrator_page/thongbaoicon4.svg'
-import img5 from '../../../common/images/imageAdministrator_page/thongbaoicon5.svg'
-import img6 from '../../../common/images/imageAdministrator_page/thongbaoicon6.svg'
+import img1 from '../../../common/images/imageAdministrator_page/tongbaoicon1.svg';
+import img2 from '../../../common/images/imageAdministrator_page/thongbaoicon2.svg';
+import img3 from '../../../common/images/imageAdministrator_page/thongbaoicon3.svg';
+import img4 from '../../../common/images/imageAdministrator_page/thongbaoicon4.svg';
+import img5 from '../../../common/images/imageAdministrator_page/thongbaoicon5.svg';
+import img6 from '../../../common/images/imageAdministrator_page/thongbaoicon6.svg';
 import { Dots } from '../../../styles';
 import { Wapper, WapperModal } from './style';
 import { AudioOutlined } from '@ant-design/icons';
@@ -27,15 +27,16 @@ dayjs.extend(customParseFormat);
 const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
 
+
 const { Search } = Input;
 
 const suffix = (
-  <AudioOutlined
-    style={{
-      fontSize: 16,
-      color: '#1677ff',
-    }}
-  />
+    <AudioOutlined
+        style={{
+            fontSize: 16,
+            color: '#1677ff'
+        }}
+    />
 );
 
 const colors = {
@@ -48,97 +49,79 @@ const colors = {
 };
 
 const style = (borderColor) => {
-  return {
-    padding: '8px 0',
-    background: 'rgb(255, 255, 255)',
-    boxShadow: 'rgba(21, 67, 152, 0.1) 0px 0px 30px',
-    borderRadius: '10px',
-    width: '100%',
-    height: '150px',
-    borderTop: `6px solid ${borderColor}`,
-  }
+    return {
+        padding: '8px 0',
+        background: 'rgb(255, 255, 255)',
+        boxShadow: 'rgba(21, 67, 152, 0.1) 0px 0px 30px',
+        borderRadius: '10px',
+        width: '100%',
+        height: '150px',
+        borderTop: `6px solid ${borderColor}`
+    };
 };
 
 const items = [
-  {
-    key: '1',
-    label: (
-      <a>
-        Hôm nay
-      </a>
-    ),
-  },
-  {
-    key: '2',
-    label: (
-      <a>
-        Hôm qua
-      </a>
-    ),
-  },
-  {
-    key: '3',
-    label: (
-      <a>
-        Trong 7 ngày qua
-      </a>
-    ),
-  },
-  {
-    key: '3',
-    label: (
-      <a>
-        Trong 30 ngày qua
-      </a>
-    ),
-  },
+    {
+        key: '1',
+        label: <a>Hôm nay</a>
+    },
+    {
+        key: '2',
+        label: <a>Hôm qua</a>
+    },
+    {
+        key: '3',
+        label: <a>Trong 7 ngày qua</a>
+    },
+    {
+        key: '3',
+        label: <a>Trong 30 ngày qua</a>
+    }
 ];
-
-
 
 //data y/c số khach hang
 const data1 = [];
 for (let i = 0; i < 4; i++) {
-  data1.push({
-    key: i,
-    stt: i,
-    codeRequest: `0000${i}`,
-    personRequest: `Person ${i}`,
-    address: `09123xxx ${i}`,
-    reason: `Adress ${i}`,
-  });
+    data1.push({
+        key: i,
+        stt: i,
+        codeRequest: `0000${i}`,
+        personRequest: `Person ${i}`,
+        address: `09123xxx ${i}`,
+        reason: `Adress ${i}`
+    });
 }
 
 //data y/c ho tro
 const columns2 = [
-  {
-    title: 'STT',
-    dataIndex: 'stt'
-  },
-  {
-    title: 'Tiêu đề',
-    dataIndex: 'codeRequest'
-  },
-  {
-    title: 'Người yêu cầu',
-    dataIndex: 'personRequest'
-  },
-  {
-    title: 'Email / Số điện thoại',
-    dataIndex: 'address'
-  },
-  {
-    title: 'Nội dung',
-    dataIndex: 'reason'
-  },
-  {
-    title: 'Ngày yêu cầu',
-    dataIndex: 'date'
-  },
-  {
-    title: 'Ghi chú',
-    dataIndex: 'note'
-  },
+    {
+        title: 'STT',
+        dataIndex: 'stt'
+    },
+    {
+        title: 'Tiêu đề',
+        dataIndex: 'codeRequest'
+    },
+    {
+        title: 'Người yêu cầu',
+        dataIndex: 'personRequest'
+    },
+    {
+        title: 'Email / Số điện thoại',
+        dataIndex: 'address'
+    },
+    {
+        title: 'Nội dung',
+        dataIndex: 'reason'
+    },
+    {
+        title: 'Ngày yêu cầu',
+        dataIndex: 'date'
+    },
+    {
+        title: 'Ghi chú',
+        dataIndex: 'note'
+    }
 ];
 
 const Genaral = () => {

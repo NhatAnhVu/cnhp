@@ -1,29 +1,30 @@
 import { combineReducers, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getDetailOverView, getOverview, updateNoteContact, updateStatusWaterBill } from "../services/apis/overview";
 
+
 const initialState = {
     overViewGet: null,
     status: 'idle',
     error: null
-}
+};
 
 const overViewSlice = createSlice({
-    name: 'overview' ,
+    name: 'overview',
     initialState,
     extraReducers: (builder) => {
         builder
-        //fetchOverView
-        .addCase(fetchOverView.pending, (state) => {
-            state.status = 'loading'
-        })
-        .addCase(fetchOverView.fulfilled, (state, action) => {
-            state.status = 'succeeded'
-            state.overViewGet = action.payload
-        })
-        .addCase(fetchOverView.rejected, (state, action) => {
-            state.status = 'failed';
-            state.error = action.error.message;
-        })
+            //fetchOverView
+            .addCase(fetchOverView.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchOverView.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.overViewGet = action.payload;
+            })
+            .addCase(fetchOverView.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            });
     }
 });
 
@@ -96,7 +97,6 @@ const overViewDetailsSlice = createSlice({
     }
 });
 
-
 //OverView
 export const fetchOverView = createAsyncThunk(
     "overview/fetchOverView", async(
@@ -163,3 +163,4 @@ const overViewReducer = combineReducers({
 
 
 export default overViewReducer;
+

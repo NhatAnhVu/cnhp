@@ -2,11 +2,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Login, Logout } from "../services/apis/auth";
 
 const initialState = {
-  isAuthenticated: false,
-  user: null,
-  loading: false,
-  error: null,
-  // token: null
+    isAuthenticated: false,
+    user: null,
+    loading: false,
+    error: null,
+    // token: null
 };
 
 const authSlice = createSlice({
@@ -55,16 +55,18 @@ export const login = createAsyncThunk(
       debugger;
       return rejectWithValue(error);
     }
-  }
 );
 
-export const logout = createAsyncThunk("auth/logout", async () => {
-  try {
-    const response = await Logout();
-    return response;
-  } catch (error) {
-    console.log("Logout failed:", error);
-  }
-});
+export const logout = createAsyncThunk(
+    "auth/logout",
+    async () => {
+        try {
+            const response = await Logout();
+            // localStorage.removeItem('token')
+            return response;
+        } catch (error) {
+            console.log("Logout failed:", error);
+        }
+    });
 
 export default authSlice.reducer;

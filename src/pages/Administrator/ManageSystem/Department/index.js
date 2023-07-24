@@ -31,7 +31,8 @@ const Department = () => {
             fetchAddPosition({
                 PositionName: newValueName,
                 Level: 0,
-                Note: newValueNote
+                Note: newValueNote,
+                DepartmentID: '0c741548-a6df-4089-bfd9-0831748ea3b1'
             })
         ).then(() => {
             dispatch(

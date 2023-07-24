@@ -21,7 +21,7 @@ function ListPositions() {
     const dispatch = useDispatch();
     const { Search } = Input;
 
-    const listView = useSelector((state) => state?.position?.positionGet?.Object?.data);
+    const listView = useSelector((state) => state?.position?.positionGet?.Object?.listPosition);
 
     const getList = () => {
         dispatch(
@@ -32,6 +32,8 @@ function ListPositions() {
             })
         );
     };
+
+    console.log(listView);
 
     useEffect(() => {
         setdataListView(listView);

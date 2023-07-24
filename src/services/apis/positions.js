@@ -1,17 +1,17 @@
 import axiosInstance from '../axios';
 
-export const GetList = (body) => {
-    return axiosInstance.post('Position/GetList', body);
+export const GetList = () => {
+    return axiosInstance.get('Position');
 };
 
 export const UpdateListPosition = (body) => {
-    return axiosInstance.put('Position/Update', body);
+    return axiosInstance.patch('Position/update', body);
 };
 
-export const DeletePosition = (positionID) => {
-    return axiosInstance.patch(`Position/Delete?PositionID=${positionID}`);
+export const DeletePosition = (body) => {
+    return axiosInstance.delete(`Position/delete`, body);
 };
 
 export const AddPosition = (body) => {
-    return axiosInstance.post('Position/Create', body);
+    return axiosInstance.post('Position/insert', body);
 };

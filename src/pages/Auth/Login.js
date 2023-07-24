@@ -19,7 +19,10 @@ function Login() {
   const navigate = useNavigate();
 
 const onFinish = (values) => {
-  dispatch(login(values));
+  dispatch(login({
+    "UserName": "Administrator",
+    "Password": "Ab@123456",
+  }));
 };
 
 if(isAuthenticated === true) {

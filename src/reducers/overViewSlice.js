@@ -120,6 +120,7 @@ export const fetchDetailsOverView = createAsyncThunk(
     , {rejectWithValue}) => {
         try {
             const response = await getDetailOverView(body);
+            // debugger;
             return response;
         } catch (error) {
             return rejectWithValue(error);

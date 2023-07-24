@@ -15,12 +15,22 @@ const suffix = (
     }}
   />
 );
-const onSearch = (value) => console.log(value);
+
 
 const ModalListCustorm = (props) => {
     const {title, visible, onOk, onCancel, columns, dataSource} = props;
+    const [searchedData, setSearchedData] = useState([]);//get data sau khi tìm kiếm
+    console.log("dataSource", dataSource);
+
+    const onSearch = (value) => {
+      const filteredData = dataSource.filter((item) => {
+        return item.PhoneNumber.toLowerCase().includes(value.toLowerCase());
+      });
+      setSearchedData(filteredData);
+    }
+
     return (
-    <WapperModal 
+      <WapperModal 
             title={title}
             onOk={onOk}
             onCancel={onCancel}
@@ -36,8 +46,8 @@ const ModalListCustorm = (props) => {
                     width: '100%',
                 }}
                 />
-            <TableComponentCustorm columns={columns} dataSource={dataSource} />
-    </WapperModal>
+            <TableComponentCustorm columns={columns} dataSource={searchedData.length > 0 ? searchedData : dataSource} />
+      </WapperModal>
   )
 }
 

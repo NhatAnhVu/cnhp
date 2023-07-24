@@ -21,7 +21,7 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isAuthenticated = true;
-        state.user = action.payload.Object.Token;
+        state.user = action.payload.Object;
         state.loading = false;
         state.error = null;
         // state.token = action.payload
@@ -46,12 +46,13 @@ const authSlice = createSlice({
 // gui request dang nhap
 export const login = createAsyncThunk(
   "auth/login",
-  async ({ Username, Password }, { rejectWithValue }) => {
+  async ({ UserName, Password }, { rejectWithValue }) => {
     try {
-      const response = await Login({ Username, Password });
+      const response = await Login({ UserName, Password });
       // console.log("response>>", response.Object.Token.Token);
       return response;
     } catch (error) {
+      debugger;
       return rejectWithValue(error);
     }
   }

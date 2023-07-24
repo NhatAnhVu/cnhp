@@ -13,3 +13,5 @@ export const updateTags = (body) => axiosInstance.post("Tags/Update", body)
 
 //add 
 export const addNewTags = (body) => axiosInstance.post("Tags/Insert", body);
+
+

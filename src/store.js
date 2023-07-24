@@ -6,6 +6,7 @@ import logger from "redux-logger";
 import overViewReducer from './reducers/overViewSlice';
 import tagsReducer from './reducers/tagsSlice.js';
 import postCategoryReducer from './reducers/categoryPostsSlice';
+import managementTeamReducer from "./reducers/managementTeamSlice.js";
 
 const authPersistConfig = {
   key: "auth",
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   overView: overViewReducer, //add OverviewSlice
   tags: tagsReducer,
   postCategory: postCategoryReducer,
+  manage: managementTeamReducer
 });
 
 const store = configureStore({

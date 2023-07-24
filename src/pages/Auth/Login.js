@@ -18,10 +18,13 @@ function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const onFinish = (values) => {
-        
-        dispatch(login(values));
-    };
+const onFinish = (values) => {
+  dispatch(login({
+    "UserName": "Administrator",
+    "Password": "Ab@123456",
+  }));
+};
+
 
     if (isAuthenticated === true) {
         navigate("/tong-quan")

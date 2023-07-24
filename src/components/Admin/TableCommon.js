@@ -1,49 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Row } from 'antd';
 import { Button, Table } from 'antd';
 import { ButtonAddUnits, Wapper, WapperTable } from '../Style/style';
 import { Modal } from 'antd';
 import ModalAddUnits from '../../pages/Administrator/Units/ModalAddUnits';
 import SearchStatus from '../../pages/Administrator/Units/SearchStatus';
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchgetList } from '../../reducers/managementTeamSlice';
 
-const columnsToQuanLy = [
-  {
-    title: 'STT',
-    dataIndex: 'stt'
-  },
-  {
-    title: 'Tài khoản',
-    dataIndex: 'account'
-  },
-  {
-    title: 'Mã tổ quản lý',
-    dataIndex: 'maToQuanLy'
-  },
-  {
-    title: 'Tên tổ quản lý',
-    dataIndex: 'tenToQuanLy'
-  },
-  {
-    title: 'Số điện thoại',
-    dataIndex: 'sdt'
-  },
-  {
-    title: 'Địa chỉ',
-    dataIndex: 'address'
-  },
-  {
-    title: 'Khu vực quản lý',
-    dataIndex: 'khuVuc'
-  },
-  {
-    title: 'Nhân viên',
-    dataIndex: 'nv'
-  },
-  {
-    title: 'Trạng thái',
-    dataIndex: 'status'
-  },
-];
+
 
 const data = [];
 for (let i = 0; i < 9; i++) {
@@ -66,11 +31,72 @@ const TableCommon = (props) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const [currentPage, setCurrentPage] = useState(1);
+
   const [isVisible, setIsVisiable] = useState(false)
 
-  // const handleOk = () => {
-  //   setIsVisiable(false)
-  // }
+  const dispatch = useDispatch();
+
+  const columnsToQuanLy = [
+    {
+      title: 'STT',
+      dataIndex: 'stt',
+      render: (_, __, index) => index + 1
+    },
+    {
+      title: 'Tài khoản',
+      dataIndex: 'UserName'
+    },
+    {
+      title: 'Mã tổ quản lý',
+      dataIndex: 'ManagementTeamCode'
+    },
+    {
+      title: 'Tên tổ quản lý',
+      dataIndex: 'ManagementTeamName'
+    },
+    {
+      title: 'Số điện thoại',
+      dataIndex: 'PhoneNumber'
+    },
+    {
+      title: 'Địa chỉ',
+      dataIndex: 'Address'
+    },
+    {
+      title: 'Khu vực quản lý',
+      dataIndex: 'khuVuc'
+    },
+    {
+      title: 'Nhân viên',
+      dataIndex: 'nv'
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'ManagementTeamStatus'
+    },
+  ];
+
+  const listManage = useSelector((state) => state?.manage?.listMagagementTeam?.listAllStatus?.Object)
+  // console.log(listManage);
+
+  const getList = () => {
+    dispatch(fetchgetList(
+      {
+        "PageSize": 20,
+        "CurrentPage": currentPage,
+        "TextSearch": "",
+        "ManagementTeamStatus": "",
+        "ProvinceID": "",
+        "DistrictID": "",
+        "WardID": ""
+      }
+    ))
+  }
+
+  useEffect(() => {
+    getList()
+  }, [])
 
   const handleShowModal = () => {
     setIsVisiable(true);
@@ -89,7 +115,6 @@ const TableCommon = (props) => {
   
   const start = () => {
     setLoading(true);
-    // ajax request after empty completing
     setTimeout(() => {
       setSelectedRowKeys([]);
       setLoading(false);
@@ -127,7 +152,7 @@ const TableCommon = (props) => {
                 >
                 </span>
               </div>
-              <WapperTable columns={columnsToQuanLy} dataSource={data} bordered/>
+              <WapperTable columns={columnsToQuanLy} dataSource={listManage} bordered/>
           </div>
           </Card>
 

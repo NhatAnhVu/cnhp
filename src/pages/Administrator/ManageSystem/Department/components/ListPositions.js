@@ -3,28 +3,27 @@ import CustomTable from '../../../../../components/Table';
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Col, Row, Modal } from 'antd';
+import { Col, Row, Modal, Input } from 'antd';
 import { ExclamationCircleFilled } from '@ant-design/icons';
-import ModalAdd from './ModalAdd';
+import ModalUpdate from './ModalUpdate';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPosition } from '../../../../../reducers/positionSlice';
+import { fetchDeletePosition, fetchPosition, fetUpdatePosition } from '../../../../../reducers/positionSlice';
 import { UpdateListPosition } from '../../../../../services/apis/positions';
+import { message } from 'antd';
 const { confirm } = Modal;
 function ListPositions() {
     const [dataListView, setdataListView] = useState([]);
-    // const [hoveredRow, setHoveredRow] = useState(null);
+    const [hoveredRow, setHoveredRow] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [dataInfo, setDataInfo] = useState(undefined);
-    const [newNameValue, setNewNameValue] = useState('');
-    const [newNoteValue, setNewNoteValue] = useState('');
+
+    const [searchedData, setSearchedData] = useState([]);
     const dispatch = useDispatch();
+    const { Search } = Input;
 
     const listView = useSelector((state) => state?.position?.positionGet?.Object?.data);
 
-    useEffect(() => {
-        setdataListView(listView);
-    }, [listView]);
-    useEffect(() => {
+    const getList = () => {
         dispatch(
             fetchPosition({
                 TextSearch: '',
@@ -32,6 +31,13 @@ function ListPositions() {
                 CurrentPage: 1
             })
         );
+    };
+
+    useEffect(() => {
+        setdataListView(listView);
+    }, [listView]);
+    useEffect(() => {
+        getList();
     }, []);
 
     const handleOk = () => {
@@ -46,10 +52,17 @@ function ListPositions() {
         setdataListView((prev) => [...prev, data]);
     };
 
-    const onFinish = (values) => {
-        console.log('123123123213', values);
+    const handleSearch = (event) => {
+        const value = event.target.value;
+        const filteredData = dataListView.filter((item) => {
+            return item.PositionName.toLowerCase().includes(value.toLowerCase());
+        });
+        setSearchedData(filteredData);
+    };
+
+    const onFinish = () => {
         dispatch(
-            UpdateListPosition({
+            fetUpdatePosition({
                 PositionID: dataInfo.PositionID,
                 PositionName: dataInfo.PositionName,
                 Note: dataInfo.Note
@@ -64,20 +77,14 @@ function ListPositions() {
             );
         });
     };
-
-    console.log('dataInfo', dataInfo);
-
     const handlePositionChange = (e) => {
-        setNewNameValue(e.target.value);
         setDataInfo({
             ...dataInfo,
             PositionName: e.target.value
         });
-        console.log(newNameValue);
     };
 
     const handleNoteChange = (e) => {
-        setNewNoteValue(e.target.value);
         setDataInfo({
             ...dataInfo,
             Note: e.target.value
@@ -104,48 +111,52 @@ function ListPositions() {
             render: (value, record) => (
                 <div className="action">
                     <div>{value}</div>
+                    {hoveredRow === record.PositionID && (
+                        <>
+                            <Row gutter={8} className="edit">
+                                <Col span={12}>
+                                    <CustomButton
+                                        className={'icon-edit icon'}
+                                        onClick={() => {
+                                            setIsModalOpen(true);
+                                            setDataInfo(record);
+                                            // console.log(record.PositionID);
+                                        }}
+                                    >
+                                        <FontAwesomeIcon icon={faPen} />
+                                    </CustomButton>
+                                </Col>
+                                <Col span={12}>
+                                    <CustomButton
+                                        className={'icon-delete icon'}
+                                        onClick={() => {
+                                            confirm({
+                                                title: 'Are you sure delete this task?',
+                                                icon: <ExclamationCircleFilled />,
+                                                content: 'Some descriptions',
+                                                okText: 'Yes',
+                                                okType: 'danger',
+                                                cancelText: 'No',
+                                                onOk() {
+                                                    dispatch(fetchDeletePosition(record.PositionID)).then(() => {
+                                                        getList();
+                                                        message.success('Xóa thành công ');
+                                                    });
+                                                },
+                                                onCancel() {
+                                                    console.log('Cancel');
+                                                }
+                                            });
 
-                    <>
-                        <Row gutter={8} className="edit">
-                            <Col span={12}>
-                                <CustomButton
-                                    className={'icon-edit icon'}
-                                    onClick={() => {
-                                        setIsModalOpen(true);
-                                        setDataInfo(record);
-                                        // console.log(record.PositionID);
-                                    }}
-                                >
-                                    <FontAwesomeIcon icon={faPen} />
-                                </CustomButton>
-                            </Col>
-                            <Col span={12}>
-                                <CustomButton
-                                    className={'icon-delete icon'}
-                                    onClick={() => {
-                                        // confirm({
-                                        //     title: 'Are you sure delete this task?',
-                                        //     icon: <ExclamationCircleFilled />,
-                                        //     content: 'Some descriptions',
-                                        //     okText: 'Yes',
-                                        //     okType: 'danger',
-                                        //     cancelText: 'No',
-                                        //     onOk() {
-                                        //         console.log('OK');
-                                        //     },
-                                        //     onCancel() {
-                                        //         console.log('Cancel');
-                                        //     }
-                                        // });
-
-                                        console.log(record);
-                                    }}
-                                >
-                                    <FontAwesomeIcon icon={faTrash} />
-                                </CustomButton>
-                            </Col>
-                        </Row>
-                    </>
+                                            console.log(record);
+                                        }}
+                                    >
+                                        <FontAwesomeIcon icon={faTrash} />
+                                    </CustomButton>
+                                </Col>
+                            </Row>
+                        </>
+                    )}
                 </div>
             )
         }
@@ -153,29 +164,30 @@ function ListPositions() {
 
     return (
         <>
+            <Search placeholder="input search text" onChange={handleSearch} style={{ width: 200 }} />
             <CustomTable
                 columns={columns}
-                dataSource={dataListView}
-                // onRow={(record, rowIndex) => {
-                //     return {
-                //         onMouseEnter: () => {
-                //             setHoveredRow(record.PositionID);
-                //         }, // mouse enter row
-                //         onMouseLeave: () => {
-                //             setHoveredRow(null);
-                //         } // mouse leave row
-                //     };
-                // }}
+                dataSource={searchedData.length > 0 ? searchedData : dataListView}
+                onRow={(record, rowIndex) => {
+                    return {
+                        onMouseEnter: () => {
+                            setHoveredRow(record.PositionID);
+                        }, // mouse enter row
+                        onMouseLeave: () => {
+                            setHoveredRow(null);
+                        } // mouse leave row
+                    };
+                }}
                 bordered
             />
-            <ModalAdd
+            <ModalUpdate
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
                 onDataSubmit={handleDataSubmit}
                 dataInfo={dataInfo}
                 onFinish={onFinish}
-                onPositonChange={handlePositionChange}
+                onPositionChange={handlePositionChange}
                 onNoteChange={handleNoteChange}
                 closeModalClick={() => {
                     setIsModalOpen(false);

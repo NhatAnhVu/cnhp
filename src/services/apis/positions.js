@@ -7,3 +7,11 @@ export const GetList = (body) => {
 export const UpdateListPosition = (body) => {
     return axiosInstance.put('Position/Update', body);
 };
+
+export const DeletePosition = (positionID) => {
+    return axiosInstance.patch(`Position/Delete?PositionID=${positionID}`);
+};
+
+export const AddPosition = (body) => {
+    return axiosInstance.post('Position/Create', body);
+};

@@ -5,20 +5,62 @@ import { Row, Col, Input, Divider } from 'antd';
 import ListDepartment from './components/ListDepartment';
 import ListPositions from './components/ListPositions';
 import { DepartmentStyled } from './styles';
+import ModalAdd from './components/ModalAdd';
+import { useState } from 'react';
+import { fetchAddPosition, fetchPosition } from '../../../../reducers/positionSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
 const Department = () => {
-    const { Search } = Input;
-    const onSearch = (value) => console.log(value);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [newValueName, setNewValueName] = useState('');
+    const [newValueNote, setNewValueNote] = useState('');
+
+    const dispatch = useDispatch();
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+    const onFinish = () => {
+        dispatch(
+            fetchAddPosition({
+                PositionName: newValueName,
+                Level: 0,
+                Note: newValueNote
+            })
+        ).then(() => {
+            dispatch(
+                fetchPosition({
+                    TextSearch: '',
+                    PageSize: 20,
+                    CurrentPage: 1
+                })
+            );
+        });
+        console.log('FINISH');
+    };
+    console.log(newValueName, newValueNote);
 
     return (
         <DepartmentStyled>
             <div className="form-search">
-                <Search placeholder="input search text" onSearch={onSearch} style={{ width: 200 }} />
                 <Divider />
             </div>
             <div className="head-group">
                 <div className="title">Phòng ban - Chức danh</div>
-                <CustomButton backgroundColor={colors.primary}>Thêm chức danh</CustomButton>
+                <CustomButton
+                    backgroundColor={colors.primary}
+                    onClick={() => {
+                        setIsModalOpen(true);
+                    }}
+                >
+                    Thêm chức danh
+                </CustomButton>
             </div>
             <Divider />
 
@@ -30,6 +72,24 @@ const Department = () => {
                     <ListPositions />
                 </Col>
             </Row>
+
+            <ModalAdd
+                openModalAdd={isModalOpen}
+                onModalAddOk={handleOk}
+                onModalAddCancel={handleCancel}
+                closeModalAddClick={() => {
+                    setIsModalOpen(false);
+                }}
+                onFormAddFinish={onFinish}
+                onNameAddChange={(e) => {
+                    setNewValueName(e.target.value);
+                    console.log('TAP HERE', e.target.value);
+                }}
+                onNoteAddChange={(e) => {
+                    setNewValueNote(e.target.value);
+                    console.log('TAP NOTE HERE', e.target.value);
+                }}
+            />
         </DepartmentStyled>
     );
 };

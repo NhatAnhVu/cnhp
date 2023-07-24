@@ -1,42 +1,17 @@
-import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form, Input } from 'antd';
 
-function ModalAdd({ open, onOk, onCancel, dataInfo, onFinish, onPositionChange, onNoteChange, closeModalClick }) {
-    // console.log('HQUAN', dataInfo.PositionName);
-
-    const [fields, setFields] = useState([]);
-
-    const [newNameValue, setNewNameValue] = useState('');
-
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-    useEffect(() => {
-        // Kiểm tra nếu dataInfo có giá trị, thì cập nhật fields
-        if (dataInfo) {
-            setFields([
-                {
-                    name: ['PositionName'],
-                    value: dataInfo.PositionName
-                },
-                {
-                    name: ['Note'],
-                    value: dataInfo.Note
-                }
-            ]);
-        }
-    }, [dataInfo]);
+function ModalAdd({ openModalAdd, onModalAddOk, onModalAddCancel, closeModalAddClick, onFormAddFinish, onNameAddChange, onNoteAddChange }) {
     return (
-        <Modal title="Basic Modal" open={open} onOk={onOk} onCancel={onCancel} footer={null}>
-            <Form onFinish={onFinish} fields={fields} layout="vertical">
+        <Modal title="Basic Modal" open={openModalAdd} onOk={onModalAddOk} onCancel={onModalAddCancel} footer={null}>
+            <Form layout="vertical" onFinish={onFormAddFinish}>
                 <Form.Item label="Chức danh" name="PositionName" rules={[{ required: true, message: 'Please input your username!' }]}>
-                    <Input placeholder="Nhập tên chức danh" onChange={onPositionChange} />
+                    <Input placeholder="Nhập tên chức danh" onChange={onNameAddChange} />
                 </Form.Item>
                 <Form.Item label="Ghi chú" name="Note" rules={[{ required: true, message: 'Please input your password!' }]}>
-                    <Input placeholder="Nhập ghi chú" onChange={onNoteChange} />
+                    <Input placeholder="Nhập ghi chú" onChange={onNoteAddChange} />
                 </Form.Item>
                 <Form.Item>
-                    <Button type="primary" htmlType="submit" onClick={closeModalClick}>
+                    <Button type="primary" htmlType="submit" onClick={closeModalAddClick}>
                         Hoàn tất
                     </Button>
                 </Form.Item>

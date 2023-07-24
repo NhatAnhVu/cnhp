@@ -1,8 +1,24 @@
-import { Table } from "antd";
+import { Modal, Table } from "antd";
 import { styled } from "styled-components";
 
 
 export const TableStyled = styled(Table)`
+.text-ellipsis{
+        -webkit-line-clamp: 1 !important;
+        line-clamp: 1 !important;
+        -webkit-box-orient: vertical !important;
+        display: -webkit-box !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+
+    }
+    .ant-table-row{
+        &:hover{
+            .action{
+                display: inline-flex;
+            }
+        }
+    }
     .custom-divider{
         min-width: calc(100% + 32px);
         margin-left: -16px;
@@ -12,7 +28,7 @@ export const TableStyled = styled(Table)`
         text-align: center;
     }
     .ant-table-tbody>tr>.ant-table-cell{
-        
+        position: relative;
         .italic{
             font-style: italic;
             color: #666;
@@ -54,8 +70,11 @@ export const TableStyled = styled(Table)`
         color:#172B4D ;
         font-weight: 600;
     }
+
+    
 `
 export const WrapperProduct = styled.div`
+    
     .product-image{
         width: 60px;
         height: 60px;
@@ -81,5 +100,52 @@ export const WrapperProductQuantity = styled.div`
         justify-content: center;
         align-items: center;
         height: 60px;
+    }
+`
+
+export const WrapperAction = styled.div`
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: absolute;
+    right: 10px;
+    background-color:rgb(227, 243, 254) ;
+    display: none;
+    top: 0;
+    height: 100%;
+    min-width: 80px;
+    z-index: 999;
+    .action-icon{
+        width: 36px;
+        height: 36px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+    }
+`
+export const ModalStyled = styled(Modal)`
+    .ant-form{
+        margin-top: 10px;
+    }
+    .ant-form-item{
+            margin-bottom: 10px;
+        }
+    label{
+        font-weight: 700;
+
+        &::before{
+            content: '*';
+            color: red;
+        }
+    }
+
+    .ant-btn-primary{
+        background: linear-gradient(90deg,#154398,#ed1117)!important;
+        border-color: #fff!important;
+        color: #fff!important;
     }
 `

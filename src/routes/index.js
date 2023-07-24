@@ -66,7 +66,6 @@ import DanhMucBaiViet from '../pages/Administrator/ManagePosts/ManagePosts';
 import DangBai from '../pages/Administrator/ManagePosts/Posts/Posts';
 import ListUser from '../pages/Administrator/ManageSystem/ListUser';
 
-import Order from "../pages/Administrator/Order";
 import InstalltionService from '../pages/Administrator/Services/InstalltionService';
 import ContractNameService from '../pages/Administrator/Services/ContractNameService';
 import ContractRenewalService from '../pages/Administrator/Services/ContractRenewalService';

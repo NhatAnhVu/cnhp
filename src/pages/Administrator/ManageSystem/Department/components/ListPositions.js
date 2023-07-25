@@ -11,36 +11,17 @@ import { fetchDeletePosition, fetchPosition, fetUpdatePosition } from '../../../
 import { UpdateListPosition } from '../../../../../services/apis/positions';
 import { message } from 'antd';
 const { confirm } = Modal;
-function ListPositions() {
-    const [dataListView, setdataListView] = useState([]);
+function ListPositions({ filteredPosition, listpositionView }) {
+    const [dataListView, setdataListView] = useState(null);
     const [hoveredRow, setHoveredRow] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [dataInfo, setDataInfo] = useState(undefined);
 
+    const [dataDefault, setDataDefault] = useState(null);
+
     const [searchedData, setSearchedData] = useState([]);
     const dispatch = useDispatch();
     const { Search } = Input;
-
-    const listView = useSelector((state) => state?.position?.positionGet?.Object?.listPosition);
-
-    const getList = () => {
-        dispatch(
-            fetchPosition({
-                TextSearch: '',
-                PageSize: 20,
-                CurrentPage: 1
-            })
-        );
-    };
-
-    console.log(listView);
-
-    useEffect(() => {
-        setdataListView(listView);
-    }, [listView]);
-    useEffect(() => {
-        getList();
-    }, []);
 
     const handleOk = () => {
         setIsModalOpen(false);
@@ -56,11 +37,20 @@ function ListPositions() {
 
     const handleSearch = (event) => {
         const value = event.target.value;
-        const filteredData = dataListView.filter((item) => {
+        const filteredData = dataListView?.filter((item) => {
             return item.PositionName.toLowerCase().includes(value.toLowerCase());
         });
         setSearchedData(filteredData);
+        console.log('searchedData', searchedData);
     };
+
+    useEffect(() => {
+        setdataListView(filteredPosition);
+    }, [filteredPosition]);
+
+    useEffect(() => {
+        setDataDefault(listpositionView);
+    }, [listpositionView]);
 
     const onFinish = () => {
         dispatch(
@@ -141,7 +131,7 @@ function ListPositions() {
                                                 cancelText: 'No',
                                                 onOk() {
                                                     dispatch(fetchDeletePosition(record.PositionID)).then(() => {
-                                                        getList();
+                                                        // getList();
                                                         message.success('Xóa thành công ');
                                                     });
                                                 },
@@ -150,7 +140,7 @@ function ListPositions() {
                                                 }
                                             });
 
-                                            console.log(record);
+                                            console.log('record', record.PositionID);
                                         }}
                                     >
                                         <FontAwesomeIcon icon={faTrash} />
@@ -163,13 +153,12 @@ function ListPositions() {
             )
         }
     ];
-
     return (
         <>
             <Search placeholder="input search text" onChange={handleSearch} style={{ width: 200 }} />
             <CustomTable
                 columns={columns}
-                dataSource={searchedData.length > 0 ? searchedData : dataListView}
+                dataSource={dataListView?.length > 0 ? dataListView : dataDefault}
                 onRow={(record, rowIndex) => {
                     return {
                         onMouseEnter: () => {

@@ -1,7 +1,7 @@
 import axiosInstance from '../axios';
 
-export const GetList = () => {
-    return axiosInstance.get('Position');
+export const GetList = (DepartmentID) => {
+    return axiosInstance.get(`Position?DepartmentID=${DepartmentID}`);
 };
 
 export const UpdateListPosition = (body) => {

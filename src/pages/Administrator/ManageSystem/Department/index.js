@@ -6,17 +6,70 @@ import ListDepartment from './components/ListDepartment';
 import ListPositions from './components/ListPositions';
 import { DepartmentStyled } from './styles';
 import ModalAdd from './components/ModalAdd';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { fetchAddPosition, fetchPosition } from '../../../../reducers/positionSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-
+import { fetchDepartment } from '../../../../reducers/departmentSlice';
 const Department = () => {
+    const dispatch = useDispatch();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newValueName, setNewValueName] = useState('');
     const [newValueNote, setNewValueNote] = useState('');
+    const [selectedDepartmentID, setSelectedDepartmentID] = useState(null);
 
-    const dispatch = useDispatch();
+    // TreeData
+    const listView = useSelector((state) => state?.department?.department?.departmentGet?.Object);
+
+    const buildTreeData = (data) => {
+        const treeData = [];
+        data?.forEach((item) => {
+            if (item.Level === 1) {
+                treeData.push({
+                    key: item.DepartmentID,
+                    title: item.DepartmentName,
+                    children: [] // Add children if needed
+                });
+            } else {
+                const parentKey = item.DepartmentParentID;
+                const parentNode = treeData.find((node) => node.key === parentKey);
+                if (parentNode) {
+                    parentNode.children.push({
+                        key: item.DepartmentID,
+                        title: item.DepartmentName,
+                        children: []
+                    });
+                }
+            }
+        });
+        return treeData;
+    };
+
+    const treeData = buildTreeData(listView);
+
+    const getList = () => {
+        dispatch(fetchDepartment());
+    };
+    useEffect(() => {
+        getList();
+    }, []);
+
+    // PositionData
+
+    const listpositionView = useSelector((state) => state?.position?.positionGet?.Object?.listPosition);
+    const getPositionList = () => {
+        dispatch(
+            fetchPosition({
+                TextSearch: '',
+                PageSize: 20,
+                CurrentPage: 1
+            })
+        );
+    };
+
+    useEffect(() => {
+        getPositionList();
+    }, []);
 
     const handleOk = () => {
         setIsModalOpen(false);
@@ -25,7 +78,11 @@ const Department = () => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+    const onSelect = (selectedKeys, info) => {
+        setSelectedDepartmentID(selectedKeys[0]);
+    };
 
+    const filteredPosition = listpositionView?.filter((item) => item.DepartmentID === selectedDepartmentID);
     const onFinish = () => {
         dispatch(
             fetchAddPosition({
@@ -45,7 +102,6 @@ const Department = () => {
         });
         console.log('FINISH');
     };
-    console.log(newValueName, newValueNote);
 
     return (
         <DepartmentStyled>
@@ -67,10 +123,10 @@ const Department = () => {
 
             <Row gutter={16}>
                 <Col span={5}>
-                    <ListDepartment />
+                    <ListDepartment treeData={treeData} onSelect={onSelect} />
                 </Col>
                 <Col span={19}>
-                    <ListPositions />
+                    <ListPositions listpositionView={listpositionView} filteredPosition={filteredPosition} />
                 </Col>
             </Row>
 

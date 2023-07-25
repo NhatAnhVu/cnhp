@@ -112,9 +112,9 @@ const addPositionSlice = createSlice({
             });
     }
 });
-export const fetchPosition = createAsyncThunk('position/fetchPosition', async (body, { rejectWithValue }) => {
+export const fetchPosition = createAsyncThunk('position/fetchPosition', async (DepartmentID, { rejectWithValue }) => {
     try {
-        const response = await GetList(body);
+        const response = await GetList(DepartmentID);
         return response;
     } catch (error) {
         return rejectWithValue(error);
@@ -138,10 +138,10 @@ export const fetchDeletePosition = createAsyncThunk('deletePosition/fetchDeleteP
 export const fetchAddPosition = createAsyncThunk('addPosition/fetchAddPosition', async (requestBody, { rejectWithValue }) => {
     try {
         const response = await AddPosition(requestBody);
-        debugger;
+        // debugger;
         return response;
     } catch (error) {
-        debugger;
+        // debugger;
         return rejectWithValue(error);
     }
 });

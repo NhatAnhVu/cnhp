@@ -117,24 +117,24 @@ const ListBill = ({ RegionId, TextSearch, Status, Month, Year }) => {
     }));
 
     
-    useEffect(() => {
+    // useEffect(() => {
 
-        const getListLocation = async () => {
-            const response = await GetListWaterBill({
-                "TextSearch": TextSearch || "",
-                "PageSize": 20,
-                "CurrentPage": 1,
-                "Month": 1,
-                "Year": 2222,
-                "Status": Status || 0,
-                "RegionID": RegionId || 4050
-            });
-            setListBill(response.Object.data);
-            console.log(response.Object.data);
-        }
-        getListLocation();
+    //     const getListLocation = async () => {
+    //         const response = await GetListWaterBill({
+    //             "TextSearch": TextSearch || "",
+    //             "PageSize": 20,
+    //             "CurrentPage": 1,
+    //             "Month": 1,
+    //             "Year": 2222,
+    //             "Status": Status || 0,
+    //             "RegionID": RegionId || 4050
+    //         });
+    //         setListBill(response.Object.data);
+    //         console.log(response.Object.data);
+    //     }
+    //     getListLocation();
 
-    }, [RegionId, TextSearch, Status])
+    // }, [RegionId, TextSearch, Status])
 
     return (
         <TableStyled

@@ -141,25 +141,26 @@ const ModalAddUnits = (props) => {
                                 placement="bottomLeft"
                                 arrow
                             >
-                                <Form.Item
-                                    name="thanh pho"
-                                    label="Quận/Huyện"
-                                    rules={[
-                                        {
-                                            required: true
-                                        }
-                                    ]}
-                                >
-                                    <Select
-                                        showSearch
-                                        placeholder="Chọn nội dung"
-                                        optionFilterProp="children"
-                                        onChange={onChange}
-                                        onSearch={onSearch}
-                                        filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
-                                        // options={optionsLevelOne}
-                                    />
-                                </Form.Item>
+
+                                    <Form.Item name="thanh pho" label="Quận/Huyện"
+                                        rules={[
+                                            {
+                                            required: true,
+                                            },
+                                        ]}
+                                        >
+                                        <Select
+                                            showSearch
+                                            placeholder="Chọn nội dung"
+                                            optionFilterProp="children"
+                                            onChange={onChange}
+                                            onSearch={onSearch}
+                                            filterOption={(input, option) =>
+                                            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                            }
+                                            // options={optionsLevelOne}
+                                        />
+                                    </Form.Item>
                             </Dropdown>
                         </Col>
                         <Col span={1}></Col>
@@ -171,25 +172,27 @@ const ModalAddUnits = (props) => {
                                 placement="bottomLeft"
                                 arrow
                             >
-                                <Form.Item
-                                    name="quanhuyen"
-                                    label="Xã/Phường"
-                                    rules={[
-                                        {
-                                            required: true
-                                        }
-                                    ]}
-                                >
-                                    <Select
-                                        showSearch
-                                        placeholder="Chọn nội dung"
-                                        optionFilterProp="children"
-                                        onChange={onChange}
-                                        onSearch={onSearch}
-                                        filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
-                                        // options={optionsLevelTwo}
-                                    />
-                                </Form.Item>
+
+                                    <Form.Item name="quanhuyen" label="Xã/Phường"
+                                        rules={[
+                                            {
+                                            required: true,
+                                            },
+                                        ]}
+                                        >
+                                        <Select
+                                            showSearch
+                                            placeholder="Chọn nội dung"
+                                            optionFilterProp="children"
+                                            onChange={onChange}
+                                            onSearch={onSearch}
+                                            filterOption={(input, option) =>
+                                            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                            }
+                                            // options={optionsLevelTwo}
+                                        />
+                                    </Form.Item>
+
                             </Dropdown>
                         </Col>
                     </Row>

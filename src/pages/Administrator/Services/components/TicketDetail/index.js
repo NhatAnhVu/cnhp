@@ -44,12 +44,7 @@ const data = {
 
 const TicketDetail = ({ onCancel, visible, id }) => {
     const [ticket, setTicket] = useState({});
-    // const statusDetails = data[0].ListStatusDetails;
-    // const lastStatus = statusDetails.length > 0 ? statusDetails[statusDetails.length - 1] : null;
-    // const lastStatusName = lastStatus ? lastStatus.StatusOrderName : '';
-    // const products = data[0].ListOrderProductDetails;
-
-    // const totalPrice = products.reduce((acc, product) => acc + product.TotalPrice, 0);
+    
 
     useEffect(() => {
         const getTicket = async () => {

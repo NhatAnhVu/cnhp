@@ -30,8 +30,10 @@ const OrderDetail = ({ onCancel, id, open }) => {
             name = 'Chờ xác nhận'
         } else if (statusOrder === 2) {
             name = 'Đang giao'
-        } else {
+        } else if(statusOrder === 3) {
             name = 'Đã giao'
+        }else{
+            name = 'Đã huỷ'
         }
 
         return name;

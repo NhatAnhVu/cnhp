@@ -30,10 +30,10 @@ export const handleCompleteOrder = async (record, setListOrders) => {
         console.error('Error confirming order:', error);
     }
 };
-export const handleConfirmOrder = async (record,setListOrders) => {
+export const handleConfirmOrder = async (record, setListOrders) => {
     try {
         // Gọi API UpdateOrder với thông tin cần thiết
-        const response = await UpdateOrder(
+        await UpdateOrder(
             {
                 OrderID: record.OrderID,
                 StatusOrder: 2,
@@ -50,8 +50,8 @@ export const handleConfirmOrder = async (record,setListOrders) => {
                         ...order,
                         StatusOrder: 2,/* trạng thái mới sau khi xác nhận, có thể là 2 hoặc giá trị tương ứng */
                         isAccept: false,
-                        isDelete:false,
-                        isComplete:true
+                        isDelete: false,
+                        isComplete: true
                     };
                 }
                 return order;
@@ -80,18 +80,34 @@ export const handleConfirmOrder = async (record,setListOrders) => {
 //         console.error('Error confirming order:', error);
 //     }
 // };
-export const handleDeleteOrder = async (record) => {
+export const handleDeleteOrder = async (orderID, reasonCancel, setListOrders) => {
     try {
         // Gọi API UpdateOrder với thông tin cần thiết
-        const response = await UpdateOrder({
-            OrderListID: [
-                record.OrderID
-            ],
-            StatusOrder: 3
+        await UpdateOrder(
+            {
+                OrderID: orderID,
+                StatusOrder: 4,
+                CreateDate: moment().format("YYYY-MM-DDTHH:mm:ssZ"),
+                ReasonCancel: reasonCancel,
+            }
 
-        }
         );
-        
+        setListOrders(prevListOrders => {
+            const updatedOrders = prevListOrders.map(order => {
+                if (order.OrderID === orderID) {
+                    // Cập nhật lại trạng thái của đơn hàng sau khi xác nhận
+                    return {
+                        ...order,
+                        StatusOrder: 4,/* trạng thái mới sau khi xác nhận, có thể là 2 hoặc giá trị tương ứng */
+                        isAccept: false,
+                        isDelete: false,
+                        isComplete: false
+                    };
+                }
+                return order;
+            });
+            return updatedOrders;
+        });
 
     } catch (error) {
         console.error('Error confirming order:', error);

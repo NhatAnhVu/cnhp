@@ -7,7 +7,7 @@ import { CancelOrder, GetAllOrderForAdmin, GetListOrder, UpdateOrder } from '../
 import { ReactComponent as ActionAccept } from '../../../../../common/images/button-accept.svg'
 import { ReactComponent as ActionDelete } from '../../../../../common/images/button-delete.svg'
 import { ReactComponent as ActionComplete } from '../../../../../common/images/button-complete.svg'
-import { handleCompleteOrder, handleConfirmOrder } from '../HandleAction';
+import { handleCompleteOrder, handleConfirmOrder, handleDeleteOrder } from '../HandleAction';
 import TitleComponent from '../../../../../components/TitleComponent';
 import moment from 'moment';
 
@@ -259,17 +259,19 @@ const ListOrder = ({ textSearch, requestFromDate, requestToDate, deliveryFromDat
 
     const handleOk = async () => {
         console.log(reasonCancel);
-        try {
-            await CancelOrder({
-                OrderID: orderID,
-                ReasonCancel: reasonCancel
-            });
+        handleDeleteOrder(orderID,reasonCancel,setListOrders)
+        setShowModalDelete(false)
+        // try {
+        //     await CancelOrder({
+        //         OrderID: orderID,
+        //         ReasonCancel: reasonCancel
+        //     });
 
-            fetchData();
-            setShowModalDelete(false)
-        } catch (error) {
-            console.error('Error fetching orders:', error);
-        }
+        //     fetchData();
+        //     setShowModalDelete(false)
+        // } catch (error) {
+        //     console.error('Error fetching orders:', error);
+        // }
     };
     return (
         <div>

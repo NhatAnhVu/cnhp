@@ -23,12 +23,27 @@ const OrderDetail = ({ onCancel, id, open }) => {
         getOrderDetail();
     }, [id]);
 
-    console.log("orderDetail", orderDetail[0]?.ListOrderProductDetails);
-    const statusDetails = orderDetail[0]?.ListStatusDetails;
+
+    const statusName = (statusOrder) => {
+        let name;
+        if (statusOrder === 1) {
+            name = 'Chờ xác nhận'
+        } else if (statusOrder === 2) {
+            name = 'Đang giao'
+        } else if(statusOrder === 3) {
+            name = 'Đã giao'
+        }else{
+            name = 'Đã huỷ'
+        }
+
+        return name;
+    }
+    console.log("orderDetail", orderDetail[0]?.listProduct);
+    const statusDetails = orderDetail[0]?.listStatus;
     console.log(statusDetails);
     const lastStatus = statusDetails?.length > 0 ? statusDetails[statusDetails.length - 1] : null;
-    const lastStatusName = lastStatus ? lastStatus.StatusOrderName : '';
-    const products = orderDetail[0]?.ListOrderProductDetails;
+    const lastStatusName = lastStatus ? statusName(lastStatus.StatusOrder)  : '';
+    const products = orderDetail[0]?.listProduct;
 
     const statusCurrent = lastStatus?.StatusOrder;
     console.log(statusCurrent);
@@ -37,7 +52,7 @@ const OrderDetail = ({ onCancel, id, open }) => {
     const stepsItems = statusDetails?.map((statusItem) => (
         {
             title: `${moment(statusItem.CreateDate).format('HH:mm:ss')} ${moment(statusItem.CreateDate).format('DD/MM/YYYY')}`,
-            description: statusItem.StatusOrderName,
+            description: statusName(statusItem.StatusOrder),
         }))
 
     const stepsDelete = [
@@ -154,7 +169,7 @@ const OrderDetail = ({ onCancel, id, open }) => {
                                             </div>
                                             <div className='checkout-item'>
                                                 <p className='title'>Tổng cộng</p>
-                                                <p className='total'>{item.TotalPriceOrder.toLocaleString()}<span className='underline'>đ</span></p>
+                                                <p className='total'>{item.TotalPrice}<span className='underline'>đ</span></p>
 
                                             </div>
                                             <div className='checkout-item'>

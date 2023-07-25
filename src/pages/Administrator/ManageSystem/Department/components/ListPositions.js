@@ -3,33 +3,25 @@ import CustomTable from '../../../../../components/Table';
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Col, Row, Modal } from 'antd';
+import { Col, Row, Modal, Input } from 'antd';
 import { ExclamationCircleFilled } from '@ant-design/icons';
-import ModalAdd from './ModalAdd';
+import ModalUpdate from './ModalUpdate';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPosition } from '../../../../../reducers/positionSlice';
+import { fetchDeletePosition, fetchPosition, fetUpdatePosition } from '../../../../../reducers/positionSlice';
+import { UpdateListPosition } from '../../../../../services/apis/positions';
+import { message } from 'antd';
 const { confirm } = Modal;
-function ListPositions() {
-    const [dataListView, setdataListView] = useState([]);
+function ListPositions({ filteredPosition, listpositionView }) {
+    const [dataListView, setdataListView] = useState(null);
     const [hoveredRow, setHoveredRow] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [dataInfo, setDataInfo] = useState(undefined);
+
+    const [dataDefault, setDataDefault] = useState(null);
+
+    const [searchedData, setSearchedData] = useState([]);
     const dispatch = useDispatch();
-
-    const listView = useSelector((state) => state?.position?.positionGet?.Object?.data);
-
-    useEffect(() => {
-        setdataListView(listView);
-    }, [listView]);
-    useEffect(() => {
-        dispatch(
-            fetchPosition({
-                TextSearch: '',
-                PageSize: 20,
-                CurrentPage: 1
-            })
-        );
-    }, []);
+    const { Search } = Input;
 
     const handleOk = () => {
         setIsModalOpen(false);
@@ -37,6 +29,58 @@ function ListPositions() {
 
     const handleCancel = () => {
         setIsModalOpen(false);
+    };
+
+    const handleDataSubmit = (data) => {
+        setdataListView((prev) => [...prev, data]);
+    };
+
+    const handleSearch = (event) => {
+        const value = event.target.value;
+        const filteredData = dataListView?.filter((item) => {
+            return item.PositionName.toLowerCase().includes(value.toLowerCase());
+        });
+        setSearchedData(filteredData);
+        console.log('searchedData', searchedData);
+    };
+
+    useEffect(() => {
+        setdataListView(filteredPosition);
+    }, [filteredPosition]);
+
+    useEffect(() => {
+        setDataDefault(listpositionView);
+    }, [listpositionView]);
+
+    const onFinish = () => {
+        dispatch(
+            fetUpdatePosition({
+                PositionID: dataInfo.PositionID,
+                PositionName: dataInfo.PositionName,
+                Note: dataInfo.Note
+            })
+        ).then(() => {
+            dispatch(
+                fetchPosition({
+                    TextSearch: '',
+                    PageSize: 20,
+                    CurrentPage: 1
+                })
+            );
+        });
+    };
+    const handlePositionChange = (e) => {
+        setDataInfo({
+            ...dataInfo,
+            PositionName: e.target.value
+        });
+    };
+
+    const handleNoteChange = (e) => {
+        setDataInfo({
+            ...dataInfo,
+            Note: e.target.value
+        });
     };
 
     const columns = [
@@ -68,6 +112,7 @@ function ListPositions() {
                                         onClick={() => {
                                             setIsModalOpen(true);
                                             setDataInfo(record);
+                                            // console.log(record.PositionID);
                                         }}
                                     >
                                         <FontAwesomeIcon icon={faPen} />
@@ -77,22 +122,25 @@ function ListPositions() {
                                     <CustomButton
                                         className={'icon-delete icon'}
                                         onClick={() => {
-                                            // confirm({
-                                            //     title: 'Are you sure delete this task?',
-                                            //     icon: <ExclamationCircleFilled />,
-                                            //     content: 'Some descriptions',
-                                            //     okText: 'Yes',
-                                            //     okType: 'danger',
-                                            //     cancelText: 'No',
-                                            //     onOk() {
-                                            //         console.log('OK');
-                                            //     },
-                                            //     onCancel() {
-                                            //         console.log('Cancel');
-                                            //     }
-                                            // });
+                                            confirm({
+                                                title: 'Are you sure delete this task?',
+                                                icon: <ExclamationCircleFilled />,
+                                                content: 'Some descriptions',
+                                                okText: 'Yes',
+                                                okType: 'danger',
+                                                cancelText: 'No',
+                                                onOk() {
+                                                    dispatch(fetchDeletePosition(record.PositionID)).then(() => {
+                                                        // getList();
+                                                        message.success('Xóa thành công ');
+                                                    });
+                                                },
+                                                onCancel() {
+                                                    console.log('Cancel');
+                                                }
+                                            });
 
-                                            console.log(record);
+                                            console.log('record', record.PositionID);
                                         }}
                                     >
                                         <FontAwesomeIcon icon={faTrash} />
@@ -105,12 +153,12 @@ function ListPositions() {
             )
         }
     ];
-
     return (
         <>
+            <Search placeholder="input search text" onChange={handleSearch} style={{ width: 200 }} />
             <CustomTable
                 columns={columns}
-                dataSource={dataListView}
+                dataSource={dataListView?.length > 0 ? dataListView : dataDefault}
                 onRow={(record, rowIndex) => {
                     return {
                         onMouseEnter: () => {
@@ -123,7 +171,19 @@ function ListPositions() {
                 }}
                 bordered
             />
-            <ModalAdd open={isModalOpen} onOk={handleOk} onCancel={handleCancel} dataInfo={dataInfo} />
+            <ModalUpdate
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                onDataSubmit={handleDataSubmit}
+                dataInfo={dataInfo}
+                onFinish={onFinish}
+                onPositionChange={handlePositionChange}
+                onNoteChange={handleNoteChange}
+                closeModalClick={() => {
+                    setIsModalOpen(false);
+                }}
+            />
         </>
     );
 }

@@ -5,14 +5,19 @@ import { Col, DatePicker, Input, Row, Select } from 'antd'
 
 const { Search } = Input;
 const onSearch = (value) => console.log(value);
-const SearchComponent = () => {
+const SearchComponent = ({ onSearchData }) => {
+    const handleSearch = (value) => {
+        // Assuming 'data' is the result of the search operation
+        onSearchData(value);
+    };
+
     return (
         <Wrapper>
             <Row gutter={16}>
                 <Col span={14}>
                     <Search
                         placeholder="Nhập mã, tên, số điện thoại khách hàng"
-                        onSearch={onSearch}
+                        onSearch={handleSearch}
                         style={{
                             width: '100%',
                         }}

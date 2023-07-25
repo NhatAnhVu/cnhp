@@ -18,6 +18,7 @@ code {
 
 :root {
   --btn-primary-color: linear-gradient(90deg, rgb(21, 67, 152) 0%, rgb(237, 17, 23) 100%);
+  --active-icon-color: linear-gradient(90deg, #154398 0%, #ED1117 100%);
 }
 
 .ant-card-head-title {

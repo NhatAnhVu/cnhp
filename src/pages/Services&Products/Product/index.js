@@ -58,10 +58,11 @@ const Product = () => {
                 IsOutOfStock: 0,
             });
             setProductList(res.Object.listProductResponse);
-            console.log(productList);
+            console.log(typeof(res.Object.listProductResponse));
         };
         getListProduct();
     }, [typeOfSort]);
+    console.log(productList);
     return (
         <Wrapper >
             <h2>Danh sach san pham</h2>

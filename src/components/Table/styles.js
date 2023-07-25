@@ -14,6 +14,9 @@ export const TableStyled = styled(Table)`
                     background-color: #f0f0f0 !important;
                 }
             }
+            &:last-child {
+                position: relative;
+            }
         }
     }
     .serial {
@@ -24,6 +27,11 @@ export const TableStyled = styled(Table)`
         display: flex;
         justify-content: space-between;
     }
+    .edit {
+        position: absolute;
+        top: 10px;
+        right: 0;
+    }
     .icon {
         border-radius: 100%;
         width: 30px;
@@ -31,13 +39,12 @@ export const TableStyled = styled(Table)`
         display: flex;
         justify-content: center;
         align-items: center;
-        svg 
     }
-    .icon-edit{
+    .icon-edit {
         background: ${colors.lightGreen};
         color: ${colors.green};
     }
-    .icon-delete{
+    .icon-delete {
         background: ${colors.lightRed};
         color: ${colors.secondary};
     }

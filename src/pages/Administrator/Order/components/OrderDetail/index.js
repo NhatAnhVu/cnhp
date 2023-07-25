@@ -1,149 +1,99 @@
 import { Col, List, Modal, Row, Steps } from 'antd'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TitleComponent from '../../../../../components/TitleComponent'
 import { StepsStyled, WrapperBody, WrapperCheckout, WrapperProduct } from './styles'
-import { UserOutlined } from '@ant-design/icons'
-import OrderStep1 from '../../../../../common/images/order-step-1.svg'
 import { ReactComponent as OrderStep1Icon } from '../../../../../common/images/order-step-1.svg'
 import { ReactComponent as OrderStep2Icon } from '../../../../../common/images/order-step-2.svg'
 import { ReactComponent as OrderStep3Icon } from '../../../../../common/images/order-step-3.svg'
 import { ReactComponent as OrderStep4Icon } from '../../../../../common/images/order-step-4.svg'
-
-const description = 'This is a description.';
-const items = [
-    {
-        title: 'Chờ xác nhận',
-        description: '16:00 16/08/2022',
-        icon: <OrderStep1Icon />,
-    },
-    {
-        title: 'Đang giao hàng',
-        description: '16:00 16/08/2022',
-        icon: <OrderStep2Icon />,
-    },
-    {
-        title: 'Đã giao',
-        description: '16:00 16/08/2022',
-        icon: <OrderStep3Icon />,
-    },
-    {
-        title: 'Đánh giá',
+import { ReactComponent as OrderStep5Icon } from '../../../../../common/images/order-step-delete.svg'
+import { GetOrderDetails } from '../../../../../services/apis/Order'
+import moment from 'moment/moment'
 
 
-        icon: <OrderStep4Icon />,
-    },
-];
-const data = [
-    {
-        AddressOrder: "hà đông",
-        FullNameOrder: "Nguyễn văn A",
-        IsReOrder: false,
-        IsReview: false,
-        ListOrderProductDetails: [
-            {
-                Image: "https://media.dthtayninh.xyz/1,321bd68f6c952f3e",
-                ProductID: "00be1e39-4bbb-4921-9d00-761c1ec4bc81",
-                ProductName: "nước thạch bích",
-                Quantity: 4,
-                SalePrice: 60000,
-                TotalPrice: 60000,
-            },
+const OrderDetail = ({ onCancel, id, open }) => {
+    const [orderDetail, setOrderDetail] = useState([]);
 
-        ],
-        ListStatusDetails: [
-            {
-                StatusOrder: 1,
-                StatusOrderName: "Chờ xác nhận",
-                CreateDate: "2022-11-24T10:28:49+07:00"
-            },
-            {
-                StatusOrder: 2,
-                StatusOrderName: "Đang giao",
-                CreateDate: "2022-11-24T10:28:49+07:00"
-            },
-            {
-                StatusOrder: 3,
-                StatusOrderName: "Đã giao",
-                CreateDate: "2022-11-24T10:28:49+07:00"
-            },
-        ],
-        OrderID: "1",
-        PaymentTypeName: "Thanh toán khi nhận hàng",
-        PhoneNumberOrder: "0963049748",
-        TotalPriceOrder: 60000,
+    useEffect(() => {
+        const getOrderDetail = async () => {
+            const response = await GetOrderDetails(id);
+            setOrderDetail((prev) => [...prev, response.Object])
+            console.log(response.Object);
+        }
+        getOrderDetail();
+    }, [id]);
 
-
-
-    },
-    {
-        AddressOrder: "hà nội",
-        FullNameOrder: "le van tuong",
-        IsReOrder: false,
-        IsReview: false,
-        ListOrderProductDetails: [
-            {
-                Image: "https://media.dthtayninh.xyz/1,321bd68f6c952f3e",
-                ProductID: "00be1e39-4bbb-4921-9d00-761c1ec4bc81",
-                ProductName: "nước thạch bích",
-                Quantity: 4,
-                SalePrice: 60000,
-                TotalPrice: 60000,
-            },
-            {
-                Image: "https://media.dthtayninh.xyz/1,321bd68f6c952f3e",
-                ProductID: "00be1e39-4bbb-4921-9d00-761c1ec4bc81",
-                ProductName: "nước thạch bích",
-                Quantity: 4,
-                SalePrice: 60000,
-                TotalPrice: 60000,
-            },
-
-        ],
-        ListStatusDetails: [
-            {
-                StatusOrder: 1,
-                StatusOrderName: "Chờ xác nhận",
-                CreateDate: "2022-11-24T10:28:49+07:00"
-            },
-            {
-                StatusOrder: 2,
-                StatusOrderName: "Đang giao",
-                CreateDate: "2022-11-24T10:28:49+07:00"
-            },
-            {
-                StatusOrder: 3,
-                StatusOrderName: "Đã giao",
-                CreateDate: "2022-11-24T10:28:49+07:00"
-            },
-        ],
-        OrderID: "2",
-        PaymentTypeName: "Thanh toán khi nhận hàng",
-        PhoneNumberOrder: "0963049748",
-        TotalPriceOrder: 100000,
-
-
-
-    },
-]
-const OrderDetail = ({ onCancel, visible, id }) => {
-    const statusDetails = data[0].ListStatusDetails;
-    const lastStatus = statusDetails.length > 0 ? statusDetails[statusDetails.length - 1] : null;
+    console.log("orderDetail", orderDetail[0]?.ListOrderProductDetails);
+    const statusDetails = orderDetail[0]?.ListStatusDetails;
+    console.log(statusDetails);
+    const lastStatus = statusDetails?.length > 0 ? statusDetails[statusDetails.length - 1] : null;
     const lastStatusName = lastStatus ? lastStatus.StatusOrderName : '';
-    const products = data[0].ListOrderProductDetails;
+    const products = orderDetail[0]?.ListOrderProductDetails;
 
-    const totalPrice = products.reduce((acc, product) => acc + product.TotalPrice, 0);
+    const statusCurrent = lastStatus?.StatusOrder;
+    console.log(statusCurrent);
 
+
+    const stepsItems = statusDetails?.map((statusItem) => (
+        {
+            title: `${moment(statusItem.CreateDate).format('HH:mm:ss')} ${moment(statusItem.CreateDate).format('DD/MM/YYYY')}`,
+            description: statusItem.StatusOrderName,
+        }))
+
+    const stepsDelete = [
+        {
+            key: 1,
+            title: 'Chờ xác nhận',
+            icon: <OrderStep1Icon className='custom-color-icon1' />,
+        },
+        {
+            key: 2,
+            title: 'Đã huỷ',
+            icon: <OrderStep5Icon />,
+        },
+    ]
+
+    const steps = [
+        {
+            key: 1,
+            title: 'Chờ xác nhận',
+            icon: <OrderStep1Icon className='custom-color-icon1' />,
+        },
+        {
+            key: 2,
+            title: 'Đang giao hàng',
+            icon: <OrderStep2Icon className='custom-color-icon2' />,
+        },
+        {
+            key: 3,
+            title: 'Đã giao',
+            icon: <OrderStep3Icon className='custom-color-icon3' />,
+        },
+        {
+            key: 4,
+            title: 'Đánh giá',
+            icon: <OrderStep4Icon className='custom-color-icon4' />,
+        },
+    ];
+    const stepsItems1 = steps.map((step, index) => {
+        const statusItem = orderDetail[0]?.ListStatusDetails?.find((status) => status.StatusOrder === index + 1);
+        return {
+            ...step,
+            description: statusItem ? `${moment(statusItem.CreateDate).format('HH:mm:ss')} ${moment(statusItem.CreateDate).format('DD/MM/YYYY')}` : '',
+        };
+    });
     return (
         <Modal
             width={1200}
             title={<TitleComponent title={'Chi tiết đơn hàng'}></TitleComponent>}
-            visible={visible}
+            open={open}
+
             onCancel={onCancel}
             footer={null}
         >
             <WrapperBody>
                 <List
-                    dataSource={data.filter((item) => item.OrderID === id)}
+                    dataSource={orderDetail}
                     renderItem={(item) => (
                         <>
                             <List.Item className='top-modal'>
@@ -154,7 +104,7 @@ const OrderDetail = ({ onCancel, visible, id }) => {
                                 </p>
                             </List.Item>
                             <List.Item className='procedure'>
-                                <StepsStyled current={3} labelPlacement="vertical" items={items} />
+                                <StepsStyled current={statusDetails?.length === 3 ? 3 : statusDetails?.length - 1} labelPlacement="vertical" items={lastStatus.StatusOrder === 4 ? stepsDelete : stepsItems1} />
                             </List.Item>
                             <List.Item className='wrapper-order-address'>
                                 <Row style={{ width: '100%' }}>
@@ -169,20 +119,7 @@ const OrderDetail = ({ onCancel, visible, id }) => {
                                             progressDot
                                             current={0}
                                             direction="vertical"
-                                            items={[
-                                                {
-                                                    title: '16:00 18/08/2022',
-                                                    description: 'Giao hàng thành công',
-                                                },
-                                                {
-                                                    title: '16:00 17/08/2022',
-                                                    description: 'Đang giao hàng',
-                                                },
-                                                {
-                                                    title: '16:00 16/08/2022',
-                                                    description: 'Chờ xác nhận',
-                                                },
-                                            ]}
+                                            items={[...stepsItems].reverse()}
                                         />
                                     </Col>
                                 </Row>
@@ -197,19 +134,17 @@ const OrderDetail = ({ onCancel, visible, id }) => {
                                                 <div>
                                                     <p className='product-name'>{product.ProductName}</p>
                                                     <p className='quantity'>x <span>{product.Quantity}</span></p>
-                                                    <p className='price'>{product.TotalPrice}<span className='underline'>đ</span></p>
-                                                    <p className='sale-price'>{product.SalePrice}<span className='underline'>đ</span></p>
+                                                    <p className='price'>{product.TotalPrice.toLocaleString()}<span className='underline'>đ</span></p>
+                                                    <p className='sale-price'>{product.SalePrice.toLocaleString()}<span className='underline'>đ</span></p>
                                                 </div>
                                             </WrapperProduct>
-
-
                                         ))}
                                     </Col>
                                     <Col span={8}>
                                         <WrapperCheckout>
                                             <div className='checkout-item'>
                                                 <p className='title'>Tạm tính ({products.length} sản phẩm)</p>
-                                                <p>{totalPrice}<span className='underline'>đ</span></p>
+                                                <p>{ }<span className='underline'>đ</span></p>
 
                                             </div>
                                             <div className='checkout-item'>
@@ -219,7 +154,7 @@ const OrderDetail = ({ onCancel, visible, id }) => {
                                             </div>
                                             <div className='checkout-item'>
                                                 <p className='title'>Tổng cộng</p>
-                                                <p className='total'>{totalPrice}<span className='underline'>đ</span></p>
+                                                <p className='total'>{item.TotalPriceOrder.toLocaleString()}<span className='underline'>đ</span></p>
 
                                             </div>
                                             <div className='checkout-item'>
@@ -239,4 +174,4 @@ const OrderDetail = ({ onCancel, visible, id }) => {
     )
 }
 
-export default OrderDetail
+export default React.memo(OrderDetail)

@@ -55,7 +55,7 @@ export const login = createAsyncThunk(
       debugger;
       return rejectWithValue(error);
     }
-);
+  });
 
 export const logout = createAsyncThunk(
     "auth/logout",

@@ -170,12 +170,12 @@ const Genaral = () => {
   ];
 
     //get dd/mm/yy hien tại và truosc đó 1 tháng
-  const today = moment().toISOString();
-  const lastMonth = moment().subtract(1, 'month').toISOString();
+  // const today = moment().toISOString();
+  // const lastMonth = moment().subtract(1, 'month').toISOString();
 
   //request body _ bandau
-  const [fromDate, setFromDate] = useState(today)
-  const [toDate, setToDate] = useState(lastMonth)
+  const [fromDate, setFromDate] = useState('')
+  const [toDate, setToDate] = useState('')
 
   //get View
   const getView = () => {

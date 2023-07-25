@@ -15,5 +15,19 @@ export const deleteManagementTeam = (id) => axiosInstance.delete(`ManagementTeam
 //update
 export const updateManagementTeam = (body) => axiosInstance.put("ManagementTeam/UpdateManagementTeam", body);
 
-//get list tinh thanh
+
+
+//get list huyen/quan
 export const getRegion = (id) => axiosInstance.get(`Region/GetRegionByParentId?ParentID=${id}`)
+
+//get list phuong/xa
+export const getRegionByRegionID = (id) => axiosInstance.get(`Product/GetAddress?ParentID=${id}`)
+
+//get list region
+export const getRegionAll = () => axiosInstance.get("Product/GetProvince");
+
+//get List Staff
+export const getListStaff = () => axiosInstance.get("User/GetListStaff");
+
+//get List region HP
+export const getListRegionHP = () => axiosInstance.get("Region/GetRegion");

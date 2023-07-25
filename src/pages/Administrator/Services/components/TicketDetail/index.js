@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 import TitleComponent from '../../../../../components/TitleComponent'
 import { StepsStyled, WrapperBody, WrapperCheckout, WrapperProduct } from './styles'
 import { UploadOutlined, UserOutlined } from '@ant-design/icons'
+import { useEffect } from 'react'
+import { GetTicket } from '../../../../../services/apis/Service'
+import moment from 'moment'
 
 const data = {
     AddressUseWater: "xóm 3",
@@ -40,12 +43,33 @@ const data = {
 
 
 const TicketDetail = ({ onCancel, visible, id }) => {
+    const [ticket, setTicket] = useState({});
     // const statusDetails = data[0].ListStatusDetails;
     // const lastStatus = statusDetails.length > 0 ? statusDetails[statusDetails.length - 1] : null;
     // const lastStatusName = lastStatus ? lastStatus.StatusOrderName : '';
     // const products = data[0].ListOrderProductDetails;
 
     // const totalPrice = products.reduce((acc, product) => acc + product.TotalPrice, 0);
+
+    useEffect(() => {
+        const getTicket = async () => {
+            const response = await GetTicket(id);
+            setTicket(response.Object)
+        }
+        getTicket()
+    }, [id])
+
+    const ticketTypeName = (ticketType) => {
+        let name;
+        if (ticketType === 1) name = 'Lắp đặt máy nước'
+        else if (ticketType === 2) name = 'Di chuyển máy nước'
+        else if (ticketType === 3) name = 'Sang tên hợp đồng DVCN'
+        else if (ticketType === 4) name = 'Cấp lại hợp đồng DVCN'
+        else name = 'Sửa chữa (đồng hồ, mạng lưới cấp nước sau đồng hồ'
+
+        return name;
+    }
+    console.log(ticket);
     const [infoFile, setInfoFile] = useState([]);
     const props = {
         name: 'file',
@@ -81,7 +105,7 @@ const TicketDetail = ({ onCancel, visible, id }) => {
     return (
         <Modal
             width={1200}
-            title={<TitleComponent title={`Chi tiết yêu cầu: ${data.GuestCode} `}></TitleComponent>}
+            title={<TitleComponent title={`Chi tiết yêu cầu: ${ticket.CustomerCode ? ticket.CustomerCode : ''} `}></TitleComponent>}
             visible={visible}
             onCancel={onCancel}
             footer={null}
@@ -90,14 +114,14 @@ const TicketDetail = ({ onCancel, visible, id }) => {
                 <Row>
                     <Col span={12}>
                         <p className='title'>Loại khách hàng:
-                            <span> {data.GuestTypeName}</span>
+                            <span> {ticket.GuestType === 1 ? 'Tư nhân' : 'Doanh nghiệp'}</span>
                         </p>
                     </Col>
                     <Col span={12}>
                         <p className='title'>Trạng thái:
-                            {data.TicketStatus === 3 ? <span className='status-green'> Hoàn thành</span >
-                                : data.TicketStatus === 2 ? <span className='status-blue'> Đang hỗ trợ</span>
-                                    : data.TicketStatus === 1 ? <span className='status-orange'> Mới</span>
+                            {ticket.TicketStatus === 3 ? <span className='status-green'> Hoàn thành</span >
+                                : ticket.TicketStatus === 2 ? <span className='status-blue'> Đang hỗ trợ</span>
+                                    : ticket.TicketStatus === 1 ? <span className='status-orange'> Mới</span>
                                         : null
                             }
 
@@ -108,12 +132,12 @@ const TicketDetail = ({ onCancel, visible, id }) => {
                 <Row>
                     <Col span={12}>
                         <p className='title'>Mã khách hàng:
-                            <span> {data.GuestCode}</span>
+                            <span> {ticket.CustomerCode}</span>
                         </p>
                     </Col>
                     <Col span={12}>
                         <p className='title'>Tên khách hàng:
-                            <span> {data.Fullname}</span>
+                            <span> {ticket.CustomerName}</span>
                         </p>
                     </Col>
                 </Row>
@@ -121,12 +145,12 @@ const TicketDetail = ({ onCancel, visible, id }) => {
                 <Row>
                     <Col span={12}>
                         <p className='title'>Điện thoại:
-                            <span> {data.PhoneNumber}</span>
+                            <span> {ticket.PhoneNumber}</span>
                         </p>
                     </Col>
                     <Col span={12}>
                         <p className='title'>Email:
-                            <span>{data.Email}</span>
+                            <span>{ticket.Email}</span>
                         </p>
                     </Col>
                 </Row>
@@ -134,7 +158,7 @@ const TicketDetail = ({ onCancel, visible, id }) => {
                 <Row>
                     <Col span={24}>
                         <p className='title'>Địa chỉ:
-                            <span>{data.AddressUseWater}</span>
+                            <span>{ticket.AddressUseWater}</span>
                         </p>
                     </Col>
 
@@ -148,7 +172,7 @@ const TicketDetail = ({ onCancel, visible, id }) => {
                     </Col>
                     <Col span={12}>
                         <p className='title'>Ngày yêu cầu:
-                            <span>{data.CreateDate}</span>
+                            <span>{moment(ticket.CreateDate).format("DD/MM/YYYY  HH:MM")}</span>
                         </p>
                     </Col>
                 </Row>
@@ -156,12 +180,12 @@ const TicketDetail = ({ onCancel, visible, id }) => {
                 <Row>
                     <Col span={12}>
                         <p className='title'>Loại yêu cầu:
-                            <span>{data.TicketTypeName}</span>
+                            <span>{ticketTypeName(ticket.TicketType)}</span>
                         </p>
                     </Col>
                     <Col span={12}>
                         <p className='title'>Hình thức yêu cầu:
-                            <span> {data.RequestTypeName}</span>
+                            <span> {ticket.RequestType === 1 ? 'Nhanh' : 'Bình thường'}</span>
                         </p>
                     </Col>
                 </Row>
@@ -169,7 +193,7 @@ const TicketDetail = ({ onCancel, visible, id }) => {
                 <Row>
                     <Col span={24}>
                         <p className='title'>Nội dung:
-                            <span> {data.Content}</span>
+                            <span> {ticket.Content}</span>
                         </p>
                     </Col>
 

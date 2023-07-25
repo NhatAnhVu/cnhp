@@ -13,7 +13,7 @@ const ContractNameService = () => {
             <TitleComponent title={'Sang tên hợp đồng DVCN'}>
                 <ListButton />
             </TitleComponent>
-            <TableContent type='2' />
+            <TableContent type={3} />
         </>
     )
 }

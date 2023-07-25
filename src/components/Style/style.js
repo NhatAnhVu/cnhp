@@ -39,4 +39,7 @@ export const WapperModal = styled(Modal)`
         font-size: 14px;
         font-weight: 600;
     }
+    .ant-modal-footer{
+        display: none;
+    }
 `

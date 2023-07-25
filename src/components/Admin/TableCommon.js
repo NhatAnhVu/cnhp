@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Row } from 'antd';
+import { Card, Row, Space } from 'antd';
 import { Button, Table } from 'antd';
 import { ButtonAddUnits, Wapper, WapperTable } from '../Style/style';
 import { Modal } from 'antd';
 import ModalAddUnits from '../../pages/Administrator/Units/ModalAddUnits';
 import SearchStatus from '../../pages/Administrator/Units/SearchStatus';
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchgetList } from '../../reducers/managementTeamSlice';
+import { fetchDeteleManageTeam, fetchgetList } from '../../reducers/managementTeamSlice';
 
-
+import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
 
 const data = [];
 for (let i = 0; i < 9; i++) {
@@ -30,10 +30,13 @@ const TableCommon = (props) => {
   const {title} = props
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(1);
 
   const [isVisible, setIsVisiable] = useState(false)
+
+  const [valueIDDelete, setValuIDDelete] = useState('')
 
   const dispatch = useDispatch();
 
@@ -65,7 +68,7 @@ const TableCommon = (props) => {
     },
     {
       title: 'Khu vực quản lý',
-      dataIndex: 'khuVuc'
+      dataIndex: 'RegionName'
     },
     {
       title: 'Nhân viên',
@@ -73,9 +76,40 @@ const TableCommon = (props) => {
     },
     {
       title: 'Trạng thái',
-      dataIndex: 'ManagementTeamStatus'
+      dataIndex: 'ManagementTeamStatus',
+      render : (text,record) => (
+        <Space>
+          <Button type="default" icon={<EditOutlined />} onClick={() => handleEdit(record)}></Button>
+          <Button type="default" icon={<DeleteOutlined />} onClick={() => handleDelete(record)}></Button>
+        </Space>
+      )
     },
   ];
+
+  const [valueRecord, setValueRecord] = useState(null)
+
+  const handleEdit = (record) => {
+    setSelectedRow(record);
+    handleShowModal();
+  }
+
+  useEffect(() => {
+    setSelectedRow(valueRecord);
+  }, [valueRecord])
+
+  //DELETE
+  // setValuIDDelete(record.ManagementTeamID);
+  const handleDelete = (record) => {
+    console.log(record.ManagementTeamID);
+    Modal.confirm({
+      title: 'Xóa',
+      content: 'Bạn chắc chắn muốn xóa tổ quản lý này không?',
+      onOk: () => {
+        dispatch(fetchDeteleManageTeam(record.ManagementTeamID))
+      },
+    });
+    getList();
+  }
 
   const listManage = useSelector((state) => state?.manage?.listMagagementTeam?.listAllStatus?.Object)
   // console.log(listManage);
@@ -84,7 +118,7 @@ const TableCommon = (props) => {
     dispatch(fetchgetList(
       {
         "PageSize": 20,
-        "CurrentPage": currentPage,
+        "CurrentPage": 1,
         "TextSearch": "",
         "ManagementTeamStatus": "",
         "ProvinceID": "",
@@ -103,6 +137,7 @@ const TableCommon = (props) => {
   };
   const handleHideModal = () => {
     setIsVisiable(false);
+    // setSelectedRow(null);
   };
 
   const isShowModal = () => {
@@ -162,11 +197,9 @@ const TableCommon = (props) => {
           
           <ModalAddUnits 
             title="Thêm tổ quản lý"
-            // onOk={handleOk}
             handlehideModal={handleHideModal}
             isModalVisiable={isVisible}
-            okText="Đồng ý"
-            cancelText="Hủy"
+            selectedRow={selectedRow}
           />
       </Wapper>
     </>

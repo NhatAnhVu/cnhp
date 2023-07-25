@@ -1,5 +1,5 @@
 import { combineReducers, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createManagementTeam, deleteManagementTeam, getAll, getListManagementTeam, getRegion, updateManagementTeam } from "../services/apis/managementTeam";
+import { createManagementTeam, deleteManagementTeam, getAll, getListManagementTeam, getListRegionHP, getListStaff, getRegion, getRegionAll, getRegionByRegionID, updateManagementTeam } from "../services/apis/managementTeam";
 
 const initialState = {
     overViewGet: null,
@@ -124,8 +124,32 @@ const createManageTeamSlice = createSlice({
     }
 });
 
+//region All
+const regionAllSlice = createSlice({
+    name: 'regionAll' ,
+    initialState: {
+        regionAll: null,
+        status: 'idle',
+        error: null
+    },
+    extraReducers: (builder) => {
+        builder
+        .addCase(fetchGetRegionAll.pending, (state) => {
+            state.status = 'loading'
+        })
+        .addCase(fetchGetRegionAll.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            state.regionAll = action.payload
+        })
+        .addCase(fetchGetRegionAll.rejected, (state, action) => {
+            state.status = 'failed';
+            state.error = action.error.message;
+        })
+    }
+});
 
-//get region
+
+//get region quan/huyen
 const regionSlice = createSlice({
     name: 'region' ,
     initialState: {
@@ -143,6 +167,80 @@ const regionSlice = createSlice({
             state.region = action.payload
         })
         .addCase(fetchGetRegion.rejected, (state, action) => {
+            state.status = 'failed';
+            state.error = action.error.message;
+        })
+    }
+});
+
+//region phuong/xa
+const regionByIDSlice = createSlice({
+    name: 'regionByRegionID' ,
+    initialState: {
+        regionByRegionID: null,
+        status: 'idle',
+        error: null
+    },
+    extraReducers: (builder) => {
+        builder
+        .addCase(fetchGetRegionByRegionID.pending, (state) => {
+            state.status = 'loading'
+        })
+        .addCase(fetchGetRegionByRegionID.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            state.regionByRegionID = action.payload
+        })
+        .addCase(fetchGetRegionByRegionID.rejected, (state, action) => {
+            state.status = 'failed';
+            state.error = action.error.message;
+        })
+    }
+});
+
+
+//staff all
+const staffAllSlice = createSlice({
+    name: 'staffAll' ,
+    initialState: {
+        staffAll: null,
+        status: 'idle',
+        error: null
+    },
+    extraReducers: (builder) => {
+        builder
+        .addCase(fetGetListStaff.pending, (state) => {
+            state.status = 'loading'
+        })
+        .addCase(fetGetListStaff.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            state.staffAll = action.payload
+        })
+        .addCase(fetGetListStaff.rejected, (state, action) => {
+            state.status = 'failed';
+            state.error = action.error.message;
+        })
+    }
+});
+
+
+//REGION HP
+const regionHPSlice = createSlice({
+    name: 'regionHP' ,
+    initialState: {
+        regionHP: null,
+        status: 'idle',
+        error: null
+    },
+    extraReducers: (builder) => {
+        builder
+        .addCase(fetGetListRegionHP.pending, (state) => {
+            state.status = 'loading'
+        })
+        .addCase(fetGetListRegionHP.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            state.regionHP = action.payload
+        })
+        .addCase(fetGetListRegionHP.rejected, (state, action) => {
             state.status = 'failed';
             state.error = action.error.message;
         })
@@ -201,8 +299,10 @@ export const fetchDeteleManageTeam = createAsyncThunk(
     , {rejectWithValue}) => {
         try {
             const response = await deleteManagementTeam(id);
+            // debugger;
             return response;
         } catch (error) {
+            // debugger;
             return rejectWithValue(error);
         }
     }
@@ -222,7 +322,7 @@ export const fetchCreateManageTeam = createAsyncThunk(
     }
 );
 
-//region
+//region by Region ID quan/huyen
 export const fetchGetRegion = createAsyncThunk(
     "region/fetchGetRegion", async(
         id
@@ -236,13 +336,68 @@ export const fetchGetRegion = createAsyncThunk(
     }
 );
 
+//region phuong/xa
+export const fetchGetRegionByRegionID = createAsyncThunk(
+    "regionByRegionID/fetchGetRegionByRegionID", async(
+        id
+    , {rejectWithValue}) => {
+        try {
+            const response = await getRegionByRegionID(id);
+            return response;
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
+
+//region All
+export const fetchGetRegionAll = createAsyncThunk(
+    "regionAll/fetchGetRegionAll", async(rejectWithValue) => {
+        try {
+            const response = await getRegionAll();
+            return response;
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
+
+//list all Staff
+export const fetGetListStaff = createAsyncThunk(
+    "staffAll/fetGetListStaff", async(rejectWithValue) => {
+        try {
+            const response = await getListStaff();
+            return response;
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
+
+
+//getListRegionHP
+export const fetGetListRegionHP = createAsyncThunk(
+    "regionHP/fetGetListRegionHP", async(rejectWithValue) => {
+        try {
+            const response = await getListRegionHP();
+            return response;
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
+
 const managementTeamReducer = combineReducers({
     listMagagementTeam : listManagementSlice.reducer,
     listAll : listAllManagementSlice.reducer,
     updateManageTeam: updateManageTeamSlice.reducer,
     deleteManageTeam: deleteManageTeamSlice.reducer,
     createManageTeam: createManageTeamSlice.reducer, 
+    regionAll: regionAllSlice.reducer,
     region : regionSlice.reducer,
+    regionByRegionID: regionByIDSlice.reducer,
+    listStaff: staffAllSlice.reducer,
+    regionListHP: regionHPSlice.reducer
 })
 
 export default managementTeamReducer;

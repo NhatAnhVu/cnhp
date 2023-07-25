@@ -3,12 +3,13 @@ import { Button, Col, Divider, Form, Input, InputNumber, List, Modal, Popover, R
 import { ModalStyled, TableStyled, WrapperAction, WrapperProduct, WrapperProductQuantity } from './styles';
 import { EyeOutlined } from '@ant-design/icons/lib/icons';
 import OrderDetail from '../OrderDetail';
-import { CancelOrder, GetAllOrderForAdmin, UpdateOrder } from '../../../../../services/apis/Order';
+import { CancelOrder, GetAllOrderForAdmin, GetListOrder, UpdateOrder } from '../../../../../services/apis/Order';
 import { ReactComponent as ActionAccept } from '../../../../../common/images/button-accept.svg'
 import { ReactComponent as ActionDelete } from '../../../../../common/images/button-delete.svg'
 import { ReactComponent as ActionComplete } from '../../../../../common/images/button-complete.svg'
-import { handleCompleteOrder, handleConfirmOrder } from '../HandleAction';
+import { handleCompleteOrder, handleConfirmOrder, handleDeleteOrder } from '../HandleAction';
 import TitleComponent from '../../../../../components/TitleComponent';
+import moment from 'moment';
 
 
 const ListOrder = ({ textSearch, requestFromDate, requestToDate, deliveryFromDate, deliveryToDate, status }) => {
@@ -42,16 +43,23 @@ const ListOrder = ({ textSearch, requestFromDate, requestToDate, deliveryFromDat
     };
     const fetchData = async () => {
         try {
-            const response = await GetAllOrderForAdmin({
-                CurrentPage: 1,
-                PageSize: 20,
-                Status: 0,
-                TextSearch: "",
-            });
+            const response = await GetListOrder(
+                "",
+                1,
+                50,
+                "",
+                "",
+                "",
+                "",
+                0
+            );
             setListOrders(response.Object.data);
         } catch (error) {
             console.error('Error fetching orders:', error);
         }
+
+
+
     };
     const columns = [
         {
@@ -76,11 +84,11 @@ const ListOrder = ({ textSearch, requestFromDate, requestToDate, deliveryFromDat
         },
         {
             title: 'Tên sản phẩm',
-            dataIndex: 'ListProductInOrder',
+            dataIndex: 'listProduct',
             width: 250,
             render: (_, record) => (
                 <WrapperProduct>
-                    {record.ListProductInOrder.map((product, index) => (
+                    {record.listProduct.map((product, index) => (
                         <>
                             <Row key={index} gutter={10}>
                                 <Col>
@@ -88,10 +96,10 @@ const ListOrder = ({ textSearch, requestFromDate, requestToDate, deliveryFromDat
                                 </Col>
                                 <Col>
                                     <p className='product-name text-ellipsis'>{product.ProductName}</p>
-                                    <p className='product-view'><span><EyeOutlined /></span>{product.View}</p>
+                                    <p className='product-view'><span><EyeOutlined /></span>1</p>
                                 </Col>
                             </Row>
-                            {index !== record.ListProductInOrder.length - 1 && <Divider className='custom-divider' />}
+                            {index !== record.listProduct.length - 1 && <Divider className='custom-divider' />}
                         </>
                     ))}
 
@@ -103,10 +111,10 @@ const ListOrder = ({ textSearch, requestFromDate, requestToDate, deliveryFromDat
             dataIndex: '',
             render: (_, record) => (
                 <>
-                    {record.ListProductInOrder.map((product, index) => (
+                    {record.listProduct.map((product, index) => (
                         <WrapperProductQuantity>
                             <div className='product-quantity'>{product.Quantity} </div>
-                            {index !== record.ListProductInOrder.length - 1 && <Divider className='custom-divider' />}
+                            {index !== record.listProduct.length - 1 && <Divider className='custom-divider' />}
                         </WrapperProductQuantity>
                     ))
                     }
@@ -138,9 +146,9 @@ const ListOrder = ({ textSearch, requestFromDate, requestToDate, deliveryFromDat
             with: 200,
             render: (_, record) => (
                 <>
-                    <span>{record.RequestDate}</span>
+                    <span>{moment(record.CreateDate).format('DD/MM/YYYY')}</span>
                     <br />
-                    <span className='italic'>{record.DeliveryDate}</span>
+                    <span className='italic'>{record.DeliveryDate ? moment(record.DeliveryDate).format('DD/MM/YYYY'):""}</span>
                 </>
 
             )
@@ -152,20 +160,20 @@ const ListOrder = ({ textSearch, requestFromDate, requestToDate, deliveryFromDat
                 <div>
                     {record.StatusOrder !== 3 && record.StatusOrder !== 4 && (
                         <WrapperAction className='action'>
-                            {record.IsAccept && (
+                            {record.isAccept && (
                                 <Tooltip placement="bottom" title={'Xác nhận'}>
                                     <span className='action-icon'>
                                         <ActionAccept onClick={(event) => {
                                             event.stopPropagation();
-                                            handleConfirmOrder(record)
+                                            handleConfirmOrder(record,setListOrders)
 
-                                            fetchData();
+                                            
 
                                         }} />
                                     </span>
                                 </Tooltip>
                             )}
-                            {record.IsDelete && (
+                            {record.isDelete && (
                                 <Tooltip placement="bottom" title={'Huỷ bỏ'}>
                                     <span className='action-icon'>
                                         <ActionDelete onClick={(event) => {
@@ -179,13 +187,13 @@ const ListOrder = ({ textSearch, requestFromDate, requestToDate, deliveryFromDat
                                 </Tooltip>
                             )}
 
-                            {record.IsComplete && (
+                            {record.isComplete && (
                                 <Tooltip placement="bottom" title={'Hoàn thành'}>
                                     <span className='action-icon'>
                                         <ActionComplete onClick={(event) => {
                                             event.stopPropagation();
-                                            handleCompleteOrder(record)
-                                            fetchData();
+                                            handleCompleteOrder(record,setListOrders)
+                                            
                                         }} />
                                     </span>
                                 </Tooltip>
@@ -195,13 +203,13 @@ const ListOrder = ({ textSearch, requestFromDate, requestToDate, deliveryFromDat
                     )}
 
                     {record.StatusOrder === 4 ? (
-                        <span className='  item-black'>{record.StatusOrderName}</span>
+                        <span className='  item-black'>Đã huỷ</span>
                     ) : record.StatusOrder === 3 ? (
-                        <span className=' item-green'>{record.StatusOrderName}</span>
+                        <span className=' item-green'>Đã giao</span>
                     ) : record.StatusOrder === 2 ? (
-                        <span className=' item-blue'>{record.StatusOrderName}</span>
+                        <span className=' item-blue'>Đang giao</span>
                     ) : record.StatusOrder === 1 ? (
-                        <span className='item-orange'>{record.StatusOrderName}</span>
+                        <span className='item-orange'>Chờ xác nhận</span>
                     ) : null}
                 </div>
             )
@@ -212,21 +220,38 @@ const ListOrder = ({ textSearch, requestFromDate, requestToDate, deliveryFromDat
 
     useEffect(() => {
         const getListOrders = async () => {
-            const response = await GetAllOrderForAdmin({
-                CurrentPage: 1,
-                PageSize: 50,
-                Status: 0,
-                TextSearch: textSearch || "",
-                RequestFromDate: requestFromDate || "",
-                RequestToDate: requestToDate || "",
-                DeliveryFromDate: deliveryFromDate || "",
-                DeliveryToDate: deliveryToDate || "",
-                Status: status || 0
-            });
+            const response = await GetListOrder(
+                textSearch || "",
+                1,
+                50,
+                requestToDate || "",
+                requestFromDate || "",
+                deliveryToDate || "",
+                deliveryFromDate || "",
+                status || 0
+            );
             setListOrders(response.Object.data)
         }
         getListOrders();
     }, [textSearch, requestFromDate, requestToDate, deliveryFromDate, deliveryToDate, status])
+    console.log(listOrders);
+    // useEffect(() => {
+    //     const getListOrders = async () => {
+    //         const response = await GetAllOrderForAdmin({
+    //             CurrentPage: 1,
+    //             PageSize: 50,
+    //             Status: 0,
+    //             TextSearch: textSearch || "",
+    //             RequestFromDate: requestFromDate || "",
+    //             RequestToDate: requestToDate || "",
+    //             DeliveryFromDate: deliveryFromDate || "",
+    //             DeliveryToDate: deliveryToDate || "",
+    //             Status: status || 0
+    //         });
+    //         setListOrders(response.Object.data)
+    //     }
+    //     getListOrders();
+    // }, [textSearch, requestFromDate, requestToDate, deliveryFromDate, deliveryToDate, status])
 
     const handleCancel = () => {
         setShowModalDelete(false);
@@ -234,17 +259,19 @@ const ListOrder = ({ textSearch, requestFromDate, requestToDate, deliveryFromDat
 
     const handleOk = async () => {
         console.log(reasonCancel);
-        try {
-            await CancelOrder({
-                OrderID: orderID,
-                ReasonCancel: reasonCancel
-            });
+        handleDeleteOrder(orderID,reasonCancel,setListOrders)
+        setShowModalDelete(false)
+        // try {
+        //     await CancelOrder({
+        //         OrderID: orderID,
+        //         ReasonCancel: reasonCancel
+        //     });
 
-            fetchData();
-            setShowModalDelete(false)
-        } catch (error) {
-            console.error('Error fetching orders:', error);
-        }
+        //     fetchData();
+        //     setShowModalDelete(false)
+        // } catch (error) {
+        //     console.error('Error fetching orders:', error);
+        // }
     };
     return (
         <div>
@@ -256,7 +283,7 @@ const ListOrder = ({ textSearch, requestFromDate, requestToDate, deliveryFromDat
                 scroll={{ y: 600 }}
                 pagination={{
                     total: listOrders.length, // Tổng số bản ghi
-                     // Số bản ghi hiển thị trong một trang
+                    // Số bản ghi hiển thị trong một trang
                     showSizeChanger: true, // Cho phép người dùng thay đổi số bản ghi hiển thị trên mỗi trang
                     showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`, // Hiển thị thông tin số bản ghi đang hiển thị
                 }}

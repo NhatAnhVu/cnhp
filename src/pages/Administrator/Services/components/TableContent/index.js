@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TableStyled } from './styles'
 import OrderDetail from '../../../Order/components/OrderDetail';
 import TicketDetail from '../TicketDetail';
+import { GetListTicket } from '../../../../../services/apis/Service';
+import moment from 'moment';
 
 const columns = [
     {
@@ -12,13 +14,13 @@ const columns = [
     },
     {
         title: 'Mã khách hàng',
-        dataIndex: 'UserCode',
-        key: 'UserCode',
+        dataIndex: 'CustomerCode',
+        key: 'CustomerCode',
     },
     {
         title: 'Người yêu cầu',
-        dataIndex: 'FullName',
-        key: 'FullName',
+        dataIndex: 'Fullname',
+        key: 'Fullname',
     },
 
     {
@@ -35,14 +37,15 @@ const columns = [
             <div>
                 <span>{record.PhoneNumber}</span>
                 <br />
-                <span className='italic'>{record.Address}</span>
+                <span className='italic'>{record.AddressUseWater}</span>
             </div>
         ),
     },
     {
         title: 'Ngày yêu cầu',
-        dataIndex: 'RequestDate',
-        key: 'RequestDate',
+        dataIndex: 'CreateDate',
+        key: 'CreateDate',
+        render: (date) => moment(date).format('DD/MM/YYYY HH:mm'),
     },
     {
         title: 'Trạng thái',
@@ -91,7 +94,9 @@ const data = [
 const TableContent = ({ type }) => {
     const [showDetailTicket, setShowDetailTicket] = useState(false);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
+    const [listTicket, setListTicket] = useState([]);
+    const [idTicket, setIdTicket] = useState();
+    const [customerCode, setCustomerCode] = useState('')
     const onSelectChange = (newSelectedRowKeys) => {
         console.log('selectedRowKeys changed: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
@@ -102,33 +107,48 @@ const TableContent = ({ type }) => {
     };
 
     const handleRowClick = (record, id) => {
-    
+
+        setIdTicket(record.TicketListID)
         // Handle row click event
         setShowDetailTicket(true)
 
     };
     const handleHide = () => {
-       
         setShowDetailTicket(false)
-
     };
+
+    useEffect(() => {
+        const getListTicket = async () => {
+            const response = await GetListTicket({
+                PageSize: 50,
+                CurrentPage: 1,
+                TextSearch: "",
+                Date: "",
+                TicketType: type || 0
+            })
+            setListTicket(response.Object)
+        }
+        getListTicket();
+    }, [type])
     return (
         <>
             <TableStyled
                 rowSelection={rowSelection}
                 columns={columns}
-                dataSource={data}
+                dataSource={listTicket}
                 bordered
                 onRow={(record) => ({
                     onClick: () => handleRowClick(record, record.orderID),
                 })}
             />
 
-            <TicketDetail
-
-                visible={showDetailTicket}
-                onCancel={handleHide}
-            />
+            {showDetailTicket && (
+                <TicketDetail
+                    id={idTicket}
+                    visible={showDetailTicket}
+                    onCancel={handleHide}
+                />
+            )}
         </>
     )
 }

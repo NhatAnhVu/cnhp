@@ -70,9 +70,7 @@ function ListAdress({ onSelectRegion }) {
     useEffect(() => {
 
         const getListLocation = async () => {
-            const response = await GetListLocation({
-                RegionId: 4050
-            });
+            const response = await GetListLocation(4050);
             setTreeData((prev) => [...prev, ...response.Object])
         }
         getListLocation();

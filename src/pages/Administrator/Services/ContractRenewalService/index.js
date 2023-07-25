@@ -13,7 +13,7 @@ const ContractRenewalService = () => {
             <TitleComponent title={'Cấp lại hợp đồng DVCN'}>
                 <ListButton />
             </TitleComponent>
-            <TableContent type='2' />
+            <TableContent type={4} />
         </>
     )
 }

@@ -285,8 +285,10 @@ export const fetchUpdateManageTeam = createAsyncThunk(
     , {rejectWithValue}) => {
         try {
             const response = await updateManagementTeam(body);
+            debugger;
             return response;
         } catch (error) {
+            debugger;
             return rejectWithValue(error);
         }
     }
@@ -315,8 +317,10 @@ export const fetchCreateManageTeam = createAsyncThunk(
     , {rejectWithValue}) => {
         try {
             const response = await createManagementTeam(body);
+            debugger;
             return response;
         } catch (error) {
+            debugger;
             return rejectWithValue(error);
         }
     }
